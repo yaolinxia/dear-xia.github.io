@@ -1,4 +1,5 @@
 # Basic
+<<<<<<< HEAD
 title: Yaolinxia
 subtitle: personal site
 description: welcome to my home ~
@@ -7,6 +8,16 @@ avatarTitle: stone
 # 头像里面的描述
 avatarDesc: soft-engineering
 url: "http://yaolinxia.github.io"
+=======
+title: HeChang
+subtitle: 个人站
+description: 欢迎来到我的个人站~
+# 头像里面的标题
+avatarTitle: dear-Xia
+# 头像里面的描述
+avatarDesc: soft-engerniing
+url: "http://dear-xia.github.io"
+>>>>>>> 1a84609448d23f3b0b281808946cad1583921622
 
 # Comment
 #comment:
@@ -15,15 +26,26 @@ url: "http://yaolinxia.github.io"
 
 # Social
 social:
+<<<<<<< HEAD
     weibo: xinghua_stone
     github: yaolinxia
     twitter: yaolinxia
     mail: 18860976931@163.com
+=======
+    # weibo: 5366874726
+    github: dear-Xia
+    # twitter:
+    # mail: leopardpan@icloud.com
+>>>>>>> 1a84609448d23f3b0b281808946cad1583921622
 
 # 百度统计
 # 使用博客模板请去掉或者更换 id
 baidu:
+<<<<<<< HEAD
     id: 7198fb555a3a3080c5f3b755542042cf
+=======
+    id: d89e18c2a14b1bd09d2f6a3430226293
+>>>>>>> 1a84609448d23f3b0b281808946cad1583921622
 
 
 
