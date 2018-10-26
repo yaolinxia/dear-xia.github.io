@@ -1,82 +1,57 @@
 ---
 layout: post
-title: "Correcting Image Orientation Using Convolutional Neural Networks"
+title: "Detecting Text in Natural Image with Connectionist Text Proposal Network"
 tag: 文献阅读
 ---
 
 ### 主要内容：
 
-用卷积神经网络矫正图像
+用连接文本提案网络检测自然图像中的文本
 
 ### 来源：
 
-<https://d4nst.github.io/2017/01/12/image-orientation/>
+https://github.com/Li-Ming-Fan/OCR-DETECTION-CTPN
 
-
+- [Zhi Tian](https://dblp.uni-trier.de/pers/hd/t/Tian:Zhi), [Weilin Huang](https://dblp.uni-trier.de/pers/hd/h/Huang:Weilin), [Tong He](https://dblp.uni-trier.de/pers/hd/h/He:Tong), [Pan He](https://dblp.uni-trier.de/pers/hd/h/He:Pan), [Yu Qiao](https://dblp.uni-trier.de/pers/hd/q/Qiao_0001:Yu):
+  Detecting Text in Natural Image with Connectionist Text Proposal Network. [ECCV (8) 2016](https://dblp.uni-trier.de/db/conf/eccv/eccv2016-8.html#TianHHH016): 56-72
 
 ### 作者目的：
 
 - 做一个有趣的应用
 - 预测图片旋转角度
 
-### 神经网络：
+### Abstract：
 
-- Artificial neural networks are machine learning algorithms vaguely inspired by biological neural networks. 
-- Convolutional and recurrent neural networks are two of the most successful ones and they are largely responsible for the recent revolution of artificial intelligence.
-- Neural networks are organised into interconnected layers of artificial neurons. 
-- Simply put, each layer takes the output of the preceding layer, applies a number of transformations, and sends its output to the next layer.
-- The purpose of the transformations that take place at each layer is to compute **features**. In machine learning, features are attributes that simplify the representation of the data.
-- , it’s easier to compare features that represent the texture at several points in the images than comparing the pixels one by one. 
-- Whereas in traditional machine learning algorithms these features needed to be carefully engineered by humans, a neural network learns how to compute the optimal features for the task at hand. 传统机器学习需要人为计算这些特征，现在神经网络是可以学习如何计算手头的任务特征的最佳方法。
-- For example, in the neural network shown above, the first layer might compute low-level features such as edges边缘, whereas the last layer might compute high-level features高级特征 such as the presence of wheels in the image图像中轮子的出现
-- In general, neural networks with more layers can learn higher-level features given that they are trained with more data更多层的神经网络，可以学习更高级别的特征, and because of this, they are said to have a better learning capacity. 更好的学习能力
-- Neural networks with many layers are called deep neural networks. This is the reason why these kinds of machine learning algorithms are commonly known as **deep learning**.具有许多层的神经网络被称为深度神经网络。 这就是为什么这些机器学习算法通常被称为深度学习的原因。
-- Each connection in a neural network has a corresponding numerical weight associated with it. These weights are the neural network’s internal state. 神经网络中的每个连接都具有与之相关的相应数字权重。 这些权重是神经网络的内部状态。
-- They are responsible for the different features that are computed at each layer. 
-- The function that computes the prediction error is typically called **loss function**, and the algorithm used to calculate the update of each weight during training is called **backpropagation**. Once the network is trained, the weights are fixed and the network can be used to predict unseen data.计算预测误差的函数通常称为损失函数，用于计算训练期间每个权重的更新的算法称为反向传播。 一旦网络被训练，权重就被固定，网络可用于预测看不见的数据。
-- Neural networks are usually trained on batches. Each time a batch is fed to the network, the prediction error is averaged over the whole batch using the loss function, and the network updates its weights based on that error. 神经网络通常是批量训练的。 每次批量送入网络时，使用损失函数对整批的预测误差进行平均，并且网络基于该错误更新其权重。
-- If the network is trained with only one sample at a time, the weight updates will be very inaccurate because the network will be optimising them based on individual samples. 如果网络一次只训练一个样本，则权重更新将非常不准确，因为网络将根据个别样本对其进行优化。
-- Using batches for training is a good trade-off: the noisy updates of training with individual samples are avoided, and the training process is quicker than if the whole training set was used because the weights are updated more frequently. Typical values for the batch size are 64, 128, 256 or 512.使用批次进行培训是一个很好的权衡：避免使用单个样本进行训练的嘈杂更新，并且训练过程比使用整个训练集更快，因为权重更新更频繁。 批量大小的典型值为64,128,256或512。
-- During training, it is important to monitor the performance of the network on a subset子集 of data that is not used for training.在培训期间，监控网络在未用于培训的数据子集上的性能非常重要。
+- We propose a novel Connectionist Text Proposal Network (CTPN) that accurately localizes text lines in natural image. 提出一种新型的连接式文本建议网络，可以精准定位自然图片中的文本行
 
-### CNN:
+- the ctpn detects a text line in a sequence of fine-scale text proposals directly in convolutional feature maps. we develop a vertical anchor mechanism that jointly predicts location and text/non-text score of each fixed-width proposal, considerably improving localization accuracy.
 
-- **Convolutional neural networks** (CNNs) are good at processing data that can be spatially arranged (2D or 3D). 
+  ctpn直接在卷积特征图中检测一系列精细文本提案中的文本行。我们开发了一种垂直定位机制，联合预测每个固定宽度方案的位置和文本/非文本分数，大大提高了定位精度。
 
-- Typical use cases of CNNs are object detection and recognition.
+- the sequential proposals are naturally connected by a recurrent neural network, which is seamlessly incorporated into the convolutional network, resulting in an end-to-end trainable model. this allows the ctpn to explore rich context information of image, making it powerful to detect extremely ambiguous text.
 
-- **Fully-connected layer**: this is the simplest type of layer. It connects all its inputs to all the outputs of the preceding layer.
+  顺序建议自然通过递归神经网络连接，该神经网络被无缝地集成到卷积网络中，从而形成一个端到端的可训练模型，这使得ctpn能够探索丰富的图像上下文信息，从而强大地检测出极端模糊的文本。
+
+- the ctpn works reliably on multi-scale and multilanguage text without further post-processing, departing from previous bottom-up methods requiring multi-step post filtering.
+
+  ctpn在多尺度和多语言文本上工作可靠，无需进一步的后处理，有别于以前需要多步后滤波的自下而上方法。
+
+- it achieves 0.88 and 0.61 f-measure on the icdar 2013 and 2015 benchmarks, surpassing recent results [8,35] by a large margin. the ctpn is computationally efficient with 0:14s=image, by using the very deep vgg16 model [27]. online demo is available at: http://textdet.com/
+
+  它在2013年和2015年的icdar基准上实现了0.88和0.61 f-度量，大大超过了最近的结果[8，35]。ctpn使用非常深的vg 16模型[27]，计算效率为0：14s=Image。
 
 
+### Method:
 
-  ![A fully-connected layer with two neurons.](https://d4nst.github.io/img/image-orientation/fully-connected.jpg)
+- **Convolutional neural networks**
 
-  A fully-connected layer with two neurons.
-
-- **Convolutional layer**: this is the type of layer that performs most of the computation in a convolutional neural network, hence their name. In essence本质上, convolutional layers operate in a similar way to fully-connected layers. The difference is that the neurons are small kernels小部分内核 only connected to a small portion of the inputs, as opposed to all of them.区别在于神经元是仅连接到一小部分输入的小内核，而不是所有输入。
-
-- These kernels are small two-dimensional windows that are slid over 滑动 all the spatial locations空间位置 in an image in order to compute a specific feature. 这些内核是小的二维窗口，它们在图像中的所有空间位置上滑动以便计算特定特征。kernels详解<https://en.wikipedia.org/wiki/Kernel_(image_processing)>
-
->  Convolution is the process of adding each element of the image to its local neighbors, weighted by the kernel. 卷积是将图像的每个元素添加到其本地邻居的过程，由内核加权。This is related to a form of [mathematical convolution](https://en.wikipedia.org/wiki/Convolution)数学卷积. It should be noted that [the matrix operation](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) being performed - convolution - is not traditional matrix multiplication, despite being similarly denoted by *.
->
-> For example, if we have two three-by-three matrices有两个三乘以三的矩阵, the first a kernel第一个是内核, and the second an image piece第二个是图片片段, convolution is the process of flipping both the rows and columns of the kernel 反转内核的行和列 and then multiplying locally similar entries and summing本地相似的条目进行相乘或者相加. The element at coordinates [2, 2] (that is, the central element) of the resulting image would be a weighted combination of all the entries of the image matrix是加权之后的结果, with weights given by the kernel:
-
-![](https://ws1.sinaimg.cn/large/e93305edgy1fwaccdouowj20ok027aa7.jpg)
-
-> The other entries would be similarly weighted, where we position the center of the kernel on each of the boundary points of the image, and compute a weighted sum. 
->
-> The values of a given pixel in the output image are calculated by multiplying each kernel value by the corresponding input image pixel values. 每个核值乘以对应图像的像素值，计算图像中给定像素的值
-
-- In neural networks, however, the kernels’ weights are not predefined, they are automatically learnt by the network during training. 
-- Moreover, CNNs use three-dimensional kernels, as they can operate over an arbitrary number channels可以在任意数量的通道上操作.
--  Deep convolutional neural networks typically use thousands of these kernels to compute different features.深度卷积神经网络通常使用数千个这些内核来计算不同的特征。
-- **Pooling layer**: this type of layer downsample its input对输入进行采样. Similar to convolutional layers, pooling layers consist of small sliding kernels由小滑动内核组成 that simply average spatial regions (average pooling) or take the maximum value (max pooling). 
-- Downsampling is typically used in convolutional neural networks to reduce the number of weights in consecutive layers, which in turn reduces their computational complexity. Pooling layers are not trainable since they don’t have any weights.
-- Some layers are usually followed by **activation functions**. These functions are applied to each neuron in the layers to decide whether they are active or not (a neuron is active if its output is greater than zero). They are in charge of providing the network with a non-linear behaviour.一些层通常后跟激活功能。 这些函数应用于层中的每个神经元，以确定它们是否处于活动状态（如果神经元的输出大于零，则神经元处于活动状态）。 他们负责为网络提供非线性行为。
 
 ### RNN:
 
-- **recurrent neural networks** (RNNs) are good at processing sequences. 
+- **CNN+LSTM**
+
+   ![](https://ws1.sinaimg.cn/large/e93305edly1fwfnqbr0cjj20qh087whu.jpg)
+
 
 ### 好句集锦：
 
