@@ -23,6 +23,13 @@ tag: Linux
 
   ![](https://ws1.sinaimg.cn/large/e93305edgy1fwkst1a498j21hc0u0npf.jpg)
 
+  将本地文件拷贝到服务器端docker中
+
+~~~
+scp -r -P 222 doc_imgs/ root@192.168.68.151：/usr/local/src
+~~~
+
+**注意：P一定要大写！！！！！，否则，拒绝访问！！！！！**
 
 ### 参考网址：
 
