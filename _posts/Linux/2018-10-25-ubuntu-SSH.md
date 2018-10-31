@@ -31,6 +31,16 @@ scp -r -P 222 doc_imgs/ root@192.168.68.151：/usr/local/src
 
 **注意：P一定要大写！！！！！，否则，拒绝访问！！！！！**
 
+- ubuntu将服务器上文件拷贝到本地
+
+~~~
+scp -r —P 222 root@nju-vm:/usr/local/src/universal_cnn/ckpts/ /usr/local/src/data
+~~~
+
+
+
+- 
+
 ### 参考网址：
 
 - https://blog.csdn.net/renyule/article/details/78949873
