@@ -331,7 +331,7 @@ config.gpu_options.per_process_gpu_memory_fraction = 0.4  #占用40%显存
 sess = tf.Session(config=config)
 ~~~
 
-- **  tf.ConfigProto(log_device_placement=True)**
+- **tf.ConfigProto(log_device_placement=True)**
 
   设置tf.ConfigProto()中参数log_device_placement = True ,可以获取到 operations 和 Tensor 被指派到哪个设备(几号CPU或几号GPU)上运行,会在终端打印出各项操作是在哪个设备上运行的。
 
@@ -393,7 +393,9 @@ class Main:
         model = Model(args['input_width'], args['input_height'], args['num_class'], 'train')
         model.build()
         self.sess.run(tf.global_variables_initializer())
-
+# 获取数据
+# dir_val：验证集目录
+#
         val_data = Data(args['input_height'], args['input_width'], args['num_class'])\
             .read(args['dir_val'], size=args['val_size'], make_char_map=True)\
             .dump_char_map('label_maps/single_char.json')

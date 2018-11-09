@@ -44,7 +44,7 @@ scp -r —P 222 root@nju-vm:/usr/local/src/universal_cnn/ckpts/ /usr/local/src/d
 ### 参考网址：
 
 - https://blog.csdn.net/renyule/article/details/78949873
-
 - <http://irwenqiang.iteye.com/blog/1151980>
+- <https://www.zhihu.com/search?type=content&q=%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>（知乎）
 
 
