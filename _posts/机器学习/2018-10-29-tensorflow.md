@@ -470,6 +470,38 @@ eval metrics: {'loss': 0.01010036, 'global_step': 1000}
 
 请注意，自定义`model_fn()`函数的内容与我们采用底层API的手动模型训练循环非常相似。
 
+### 2.8 tf.train.Saver()
+
+管理模型中的所有变量。可以将变量保存到检查点文件中。
+
+~~~python
+# Create some variables.
+v1 = tf.get_variable("v1", shape=[3], initializer = tf.zeros_initializer)
+v2 = tf.get_variable("v2", shape=[5], initializer = tf.zeros_initializer)
+
+inc_v1 = v1.assign(v1+1)
+dec_v2 = v2.assign(v2-1)
+
+# Add an op to initialize the variables.
+init_op = tf.global_variables_initializer()
+
+# Add ops to save and restore all the variables.
+saver = tf.train.Saver()
+
+# Later, launch the model, initialize the variables, do some work, and save the
+# variables to disk.
+with tf.Session() as sess:
+  sess.run(init_op)
+  # Do some work with the model.
+  inc_v1.op.run()
+  dec_v2.op.run()
+  # Save the variables to disk.
+  save_path = saver.save(sess, "/tmp/model.ckpt")
+  print("Model saved in path: %s" % save_path)
+~~~
+
+
+
 ## 参考网址
 
 - <https://www.jianshu.com/p/e5076a56946c>
