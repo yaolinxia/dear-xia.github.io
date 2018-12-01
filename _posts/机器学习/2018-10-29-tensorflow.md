@@ -54,7 +54,11 @@ print(node1, node2)
 Tensor("Const:0", shape=(), dtype=float32) Tensor("Const_1:0", shape=(), dtype=float32)
 ~~~
 
+为了在Python中进行有效的数值计算，我们通常使用像[NumPy](http://www.numpy.org/)这样的库，这些库执行昂贵的操作，例如Python之外的矩阵乘法，使用以另一种语言实现的高效代码。 不幸的是，每次操作都会返回Python，但仍然会有很多开销。 如果您想要在GPU上运行计算或以分布式方式运行计算，则这种开销尤其糟糕，因为在这种情况下，传输数据的成本很高。
 
+TensorFlow也在Python之外进行繁重的工作，但为了避免这种开销，它需要更进一步。 TensorFlow不是只独立于Python运行一个单一的昂贵操作，而是让我们描述完全一个完全在Python之外运行的交互操作的图。 这种方法类似于Theano或Torch中使用的方法。
+
+因此，Python代码的作用是构建这个外部计算图，并指定应该运行计算图的哪些部分。 有关详细信息，请参阅[TensorFlow 入门](https://yiyibooks.cn/__trs__/yiyi/tensorflow_13/get_started/get_started.md)中的[计算图](https://yiyibooks.cn/__trs__/yiyi/tensorflow_13/get_started/get_started.md#the_computational_graph)部分。
 
 ## 二、 相关函数
 
