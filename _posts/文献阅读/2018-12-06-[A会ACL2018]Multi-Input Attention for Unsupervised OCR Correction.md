@@ -81,11 +81,98 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fxx51fm1a8j20fn045q3h.jpg)
 
-- we propose to map each erroneous ocr’d text unit to either its high-quality duplication or a consensus correction among its duplications via bootstrapping from an uniform error model.
+- we propose to map each erroneous ocr’d text unit to either its high-quality duplication or a consensus correction among its duplications via bootstrapping from an uniform error model.
 
   我们建议将每个错误的OCR文本单元映射到其高质量的复制或通过从统一的错误模型中引导来纠正其复制之间的协商一致。
 
-- 
+- in this paper, we aim to train an unsupervised correction model via utilizing the duplication in ocr output.
+
+  本文旨在利用OCR输出中的重复信息来训练一个无监督的校正模型。
+
+- the baseline correction system is a sequence-to-sequence model with attention (bahdanau et al., 2015), which has been shown to be effective in text correction tasks (chollampatt et al., 2016; xie et al., 2016)
+
+  基线校正系统是一个具有注意的序列到序列模型(bahdanau等人，2015年)，该模型已被证明在文本校正任务中是有效的(chollampatt等人，2016年；谢等人，2016年)。
+
+- we also seek to improve the correction performance for duplicated texts by integrating multiple inputs.
+
+  我们还试图通过集成多个输入来提高重复文本的校正性能。
+
+- previous work on combining multiple inputs in neural translation deal with data from different domains
+
+  以往在神经翻译中结合多个输入的工作都是针对不同领域的数据进行的。
+
+- therefore, their models need to be trained on multiple inputs to learn parameters to combine inputs from each domain.
+
+  因此，需要对它们的模型进行多输入方面的培训，以学习参数以组合来自每个领域的输入。
+
+- given that the inputs of our task are all from the same domain, our model is trained on a single input and introduces multi-input attention to generate a consensus result merely for decoding.
+
+  考虑到我们任务的输入都来自同一领域，我们的模型被训练成一个单一的输入，并引入多输入注意来产生一个一致的结果，仅仅是为了解码。
+
+- it does not require learning extra parameters for attention combination and thus is more efficient to train.
+
+  它不需要学习额外的参数为注意力组合，因此是更有效的训练。
+
+- furthermore, average attention combination, a simple multi-input attention mechanism, is proposed to improve both the effectiveness and efficiency of multi-input combination on the ocr post-correction task.
+
+  此外，为了提高多输入组合在OCR后校正任务中的有效性和效率，提出了一种简单的多输入注意组合机制&平均注意组合。
+
+### 实验
+
+- 分别在监督和非监督训练集上训练
+
+- we experiment with both supervised and unsupervised training and with single- and multiinput decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
+
+  我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段：
+
+- for both collections, which were manually transcribed by other researchers and are in the public  domain, we aligned the one-best output of an ocr system to the manual transcripts.
+
+  对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
+
+### 数据
+
+- newspaper articles from the richmond (virginia) daily dispatch (rdd) from 1860–1865
+
+  1860年至1865年，来自里士满(弗吉尼亚)日报的文章
+
+- books from 1500– 1800 from the text creation partnership (tcp)
+
+  来自文本创建伙伴关系(Tcp)的1500到1800的书籍。
+
+- for both collections, which were manually transcribed by other researchers and are in the public domain, we aligned the one-best output of an ocr system to the manual transcripts.
+
+  对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
+
+- we also aligned the ocr in the training and evaluation sets to other public-domain newspaper issues (from the library of congress) and books (from the internet archive) to find multiple duplicates as “witnesses”, where available, for each line.
+
+  我们还将培训和评估集中的OCR与其他公共领域的报纸问题(来自国会图书馆)和书籍(来自互联网档案)进行调整，以便为每一行找到多份作为“见证者”的副本。
+
+- experimental results on both datasets show that our proposed averarge attention combination mechanism is more effective than existing methods in integrating multiple inputs.
+
+  在这两个数据集上的实验结果表明，我们提出的平均注意力组合机制比现有的多输入融合方法更有效。
+
+- moreover, our noisy error correction model achieves comparable performance with the supervised model via multiple-input decoding on duplicated texts.
+
+  此外，通过对重复文本进行多输入解码，我们的噪声纠错模型达到了与监督模型相当的性能。
+
+
+### 论文贡献
+
+- a scalable framework needing no supervision from human annotations to train the correction model
+
+  一个无需人工注释监督的可扩展框架来训练校正模型
+
+- a multi-input attention mechanism incorporating aligning, correcting, and voting on multiple sequences simultaneously for consensus decoding, which is more efficient and effective than existing ensemble methods
+
+  一种同时对多个序列进行比对、校正和投票的多输入注意机制，与现有的集成方法相比，具有更高的效率和效率。
+
+- a method that corrects text either with or without duplicated versions, while most existing methods can only deal with one of these cases.
+
+  一种纠正文本的方法，无论是否有重复的版本，而大多数现有方法只能处理这些情况中的一种。
+
+- to get more evidence for the correct reading of an ocr’d line, we aligned each ocr’d rdd issue to other issues of the rdd and other newspapers from chronicling america and aligned each ocr’d tcp page to other pre-1800 books in the internet archive.
+
+  为了获得正确阅读OCR‘d行的更多证据，我们将OCR的RDD问题与RDD的其他问题和其他报纸联系起来，从记录美国开始，并将每一个OCR’tcp页面与互联网档案中其他1800前的书籍对齐。
 
 ### 所用模型
 
