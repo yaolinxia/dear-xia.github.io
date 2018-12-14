@@ -157,6 +157,16 @@ dense(
 
 ​	用来控制计算流图
 
+#### tf.train.get_or_create_global_step( )
+
+global_step经常在滑动平均，学习速率变化的时候需要用到，这个参数在tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_steps)里面有，系统会自动更新这个参数的值，从1开始。
+
+#### tf.train.AdamOptimizer()
+
+优化器
+
+
+
 ### 1.2 主体部分
 
 ~~~python
