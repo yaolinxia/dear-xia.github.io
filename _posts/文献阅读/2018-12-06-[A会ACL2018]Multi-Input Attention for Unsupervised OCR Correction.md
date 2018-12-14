@@ -85,7 +85,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   我们建议将每个错误的OCR文本单元映射到其高质量的复制或通过从统一的错误模型中引导来纠正其复制之间的协商一致。
 
-- in this paper, we aim to train an unsupervised correction model via utilizing the duplication in ocr output.
+- in this paper, we aim to train an unsupervised correction model via utilizing the duplication in ocr output。
 
   本文旨在利用OCR输出中的重复信息来训练一个无监督的校正模型。
 
@@ -109,7 +109,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   考虑到我们任务的输入都来自同一领域，我们的模型被训练成一个单一的输入，并引入多输入注意来产生一个一致的结果，仅仅是为了解码。
 
-- it does not require learning extra parameters for attention combination and thus is more efficient to train.
+- it does not require learning extra parameters for attention combination and thus is more efficient to train.
 
   它不需要学习额外的参数为注意力组合，因此是更有效的训练。
 
@@ -121,7 +121,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - 分别在监督和非监督训练集上训练
 
-- we experiment with both supervised and unsupervised training and with single- and multiinput decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
+- we experiment with both supervised and unsupervised training and with single- and multi-input decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
 
   我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段：
 
@@ -155,6 +155,82 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   此外，通过对重复文本进行多输入解码，我们的噪声纠错模型达到了与监督模型相当的性能。
 
+#### 数据收集
+
+- 从两个来源中选择一个最好的OCR输出， 基于此之上，做实验。1）美国历史新闻——200万，2）公共领域300万存档
+
+  chronicling america and the internet archive
+
+  记录美国和互联网档案
+
+- **监督学习：**训练以及评估；首先进行人工匹配
+
+- text creation partnership
+
+  文本创建伙伴关系
+
+- both of these manually transcribed collections, which were produced independently from the current authors, are in the public domain and in english, although both chronicling america and the internet archive also contain much non-english text.
+
+  这两本手工抄录的藏书都是在公共领域和英文中独立制作的，尽管美国的编年史和互联网档案都包含了大量的非英语文本。
+
+- 为了获得更多的证据来阅读OCR的第几行
+
+- we aligned each ocr’d rdd issue to other issues of the rdd and other newspapers from chronicling america and aligned each ocr’d tcp page to other pre-1800 books in the internet archive
+
+  我们将每一期OCR的RDD问题与RDD的其他问题和其他报纸联系起来，从美国编年史开始，并将每一OCR的TCP页面与互联网档案中其他1800前的书籍对齐。
+
+- to perform these alignments between noisy ocr transcripts efficiently, we used methods from our earlier work on text-reuse analysis
+
+  为了有效地在含噪声的ocr转录本之间进行这些对齐，我们使用了我们先前在文本重用分析方面的工作中的方法。
+
+- an inverted index of hashes of word 5-grams was produced, and then all pairs from different pages in the same posting list were extracted
+
+  生成了一个单词5-克的倒哈希索引，然后从同一发帖列表中的不同页面中提取所有对。
+
+- pairs of pages with more than five shared hashed 5-grams were aligned with the smith-waterman algorithm with equal costs for insertion, deletion, and substitution, which returns a maximally aligned subsequence in each pair of pages
+
+  具有超过5个共享散列5克的页面对齐使用smith-Waterman算法，其插入、删除和替换代价相等，该算法在每对页中返回最大对齐子序列。
+
+- aligned passages that were at least five lines long in the target rdd or tcp text were output
+
+  输出目标rdd或tcp文本中至少5行长的对齐段落。
+
+- for each target ocr line—i.e., each line in the training or test set—there are thus, in addition to the ground-truth manual transcript, zero or more witnesses from similar texts, to use the term from textual criticism.
+
+  因此，对于每一条目标OCR线-即训练或测试集中的每一行-除了地面-“真相手册”成绩单外，还有来自类似文本的零名或多名证人使用来自考证的术语。
+
+#### 训练和测试
+
+- in our experiments on ocr correction, each training and test example is a line of text following the layout of the scanned image documents
+
+  在我们关于ocr校正的实验中，每个训练和测试示例都是按照扫描图像文档的布局排列的一行文本。
+
+- the average number of characters per line is 42.4 for the rdd newspapers and 53.2 for the tcp books.
+
+  RDD报纸的每行字符数平均为42.4，TCP图书为53.2。
+
+- table 2 lists statistics for the number of ocr’d text lines with manual transcriptions and additional witnesses
+
+  表2列出了带有人工抄写和其他证人的OCR文本行数的统计数据
+
+  ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2ttc1nl7j20h407swg3.jpg)
+
+- in the full chronicling america data, 44% of lines align to at least one other witness.
+
+  在完整的美国数据编年史中，44%的行与至少一位其他目击者（见证）保持一致。
+
+- 43%的人工转录在RDD中出现，64%的则在TCP书中出现
+
+- although not all ocr collections will have this level of repetition, it is notable that these collections, which are some of the largest public-domain digital libraries, do exhibit this kind of reprinting.
+
+  虽然并非所有的OCR藏品都会有这种程度的重复，但值得注意的是，这些收藏是一些最大的公共领域数字图书馆，确实展示了这种重印。
+
+- similarly, at least 25% of the pages in google’s web crawls are duplicates
+
+  类似地，Google网页抓取中至少有25%的页面是重复的
+
+- 
+
 
 ### 论文贡献
 
@@ -174,15 +250,73 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   为了获得正确阅读OCR‘d行的更多证据，我们将OCR的RDD问题与RDD的其他问题和其他报纸联系起来，从记录美国开始，并将每一个OCR’tcp页面与互联网档案中其他1800前的书籍对齐。
 
-### 所用模型
 
 
+### 方法
+
+#### 问题
+
+![](https://ws1.sinaimg.cn/large/e93305edgy1fy2u61ksndj20h408xmzd.jpg)
+
+#### 模型
+
+- 基于注意力的端到端模型
+
+- 先前的工作：双向RNN(1997)，将原序列转化成RNN的状态序列
+
+- a concatenation of both forward and backward hidden states at time step
+
+  前向和后向隐态在时间步态的级联
+
+  ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2v9wrzs9j20ej0f10w8.jpg)
+
+  ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2vawfoy9j20d00enwh7.jpg)
+
+
+#### 多输入Attention
+
+![](https://ws1.sinaimg.cn/large/e93305edgy1fy319q9mvrj20gv0cqdhy.jpg)
+
+
+
+
+
+
+
+#### 几种非监督方法(训练设置)
+
+训练矫正模型
+
+##### 有监督
+
+- seq2seq-super
+
+  seq2seq-超级
+
+##### 无监督
+
+- in the absence of ground truth transcriptions, we can use different methods to generate a noisy corrected version for each ocr’d line
+
+  在没有地面真实转录的情况下，我们可以使用不同的方法为每条OCR D线生成一个有噪声的校正版本
+
+- 噪声训练
+
+- 综合训练
+
+- synthetic training with bootstrapping.
+
+  用鞋带进行综合训练。
 
 
 
 ### 实验
 
+#### 训练细节
 
+- 随机把OCR分成了80%的训练，20%的测试
+- 
+
+#### 
 
 
 
@@ -195,6 +329,14 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 ### 启发
 
 
+
+
+
+
+
+
+
+### Attention机制
 
 
 

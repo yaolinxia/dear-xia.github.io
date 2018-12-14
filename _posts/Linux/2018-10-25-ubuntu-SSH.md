@@ -37,8 +37,6 @@ scp -r -P 222 doc_imgs/ root@192.168.68.151：/usr/local/src
 scp -r —P 222 root@nju-vm:/usr/local/src/universal_cnn/ckpts/ /usr/local/src/data
 ~~~
 
-
-
 - 
 
 ### 参考网址：
