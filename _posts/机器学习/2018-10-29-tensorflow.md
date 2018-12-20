@@ -504,7 +504,136 @@ with tf.Session() as sess:
   print("Model saved in path: %s" % save_path)
 ~~~
 
+### 2.9 tf.logging.set_verbosity日志消息
 
+在tensorflow中有函数可以直接log打印，这个跟ROS系统中打印函数差不多。
+
+TensorFlow使用五个不同级别的日志消息。 按照上升的顺序，它们是DEBUG，INFO，WARN，ERROR和FATAL。 当您在任何这些级别配置日志记录时，TensorFlow将输出与该级别相对应的所有日志消息以及所有级别的严重级别。 例如，如果设置了ERROR的日志记录级别，则会收到包含ERROR和FATAL消息的日志输出，如果设置了一个DEBUG级别，则会从所有五个级别获取日志消息。    # 默认情况下，TENSFlow在WARN的日志记录级别进行配置，但是在跟踪模型训练时，您需要将级别调整为INFO，这将提供适合操作正在进行的其他反馈。
+
+### 2.10 tf.app.run()
+
+理flag解析，然后执行main函数，那么flag解析是什么意思呢？诸如这样的：
+
+~~~python
+tf.app.flags.DEFINE_boolean("self_test", False, "True if running a self test.")
+tf.app.flags.DEFINE_boolean('use_fp16', False,
+                            "Use half floats instead of full floats if True.")
+FLAGS = tf.app.flags.FLAGS
+~~~
+
+- 如果你的代码中的入口函数不叫main()，而是一个其他名字的函数，如test()，则你应该这样写入口`tf.app.run(test())`
+- 如果你的代码中的入口函数叫main()，则你就可以把入口写成`tf.app.run()`
+
+### 2.11 tf.device(dev)
+
+使用 **tf.device()** 指定模型运行的具体设备，可以指定运行在GPU还是CUP上，以及哪块GPU上。
+
+**设置使用GPU**
+
+使用 tf.device('/gpu:1') 指定Session在第二块GPU上运行
+
+## 三、模型的训练
+
+### 3.1 定义指标
+
+- 定义指标，衡量模型是好的还是坏的
+- 指标称为成本（成本）或者损失（loss）
+- 然后需要最小化这个指标
+
+### 3.2 交叉熵
+
+- 一个非常漂亮的成本函数
+
+- 产生于信息论里面的信息压缩编码技术，后来演变称为机器学习中的重要技术手段
+
+  ![1545220617372](C:\Users\yao\AppData\Roaming\Typora\typora-user-images\1545220617372.png)
+
+  > y：预测的概率分布
+  >
+  > y'：实际的分布（eg：one-hot）
+
+- 为了计算交叉熵，需要添加一个新的占位符
+
+  ~~~
+  y_ = tf.placeholder("float", [None,10])
+  ~~~
+
+- 计算交叉熵
+
+  ```python
+  cross_entropy = -tf.reduce_sum(y_*tf.log(y))
+  ```
+
+  首先，用 `tf.log` 计算 `y` 的每个元素的对数。接下来，我们把 `y_` 的每一个元素和 `tf.log(y_)` 的对应元素相乘。最后，用 `tf.reduce_sum` 计算张量的所有元素的总和。（注意，这里的交叉熵不仅仅用来衡量单一的一对预测和真实值，而是所有100幅图片的交叉熵的总和。对于100个数据点的预测表现比单一数据点的表现能更好地描述我们的模型的性能。
+
+### 3.3 自动使用反向传播
+
+- 确定你的变量是如何影响你想要最小化的那个成本值
+
+- TensorFlow会用你选择的优化算法来不断地修改变量以降低成本。
+
+  ~~~
+  train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)
+  ~~~
+
+  在这里，我们要求TensorFlow用梯度下降算法（gradient descent algorithm）以0.01的学习速率最小化交叉熵。梯度下降算法（gradient descent algorithm）是一个简单的学习过程，TensorFlow只需将每个变量一点点地往使成本不断降低的方向移动。当然TensorFlow也提供了[其他许多优化算法](http://www.tensorfly.cn/tfdoc/api_docs/python/train.html#optimizers)：只要简单地调整一行代码就可以使用其他的算法。
+
+### 3.4 初始化变量
+
+现在，我们已经设置好了我们的模型。在运行计算之前，我们需要添加一个操作来初始化我们创建的变量：
+
+~~~python
+init = tf.initialize_all_variables()
+~~~
+
+在一个`Session`里面启动我们的模型，并且初始化变量：
+
+~~~python
+sess = tf.Session()
+sess.run(init)
+~~~
+
+### 3.5 设置训练次数
+
+- eg：然后开始训练模型，这里我们让模型循环训练1000次！
+
+~~~python
+for i in range(1000):
+  batch_xs, batch_ys = mnist.train.next_batch(100)
+  sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+~~~
+
+- 该循环的每个步骤，会随机抓取训练数据中的100个批处理数据点。
+- 然后用这个数据点，作为参数替换之前的占位符来运行`train_step`
+- 使用一小部分的随机数据来进行训练被称为**随机训练**（stochastic training）- 在这里更确切的说是随机梯度下降训练。
+- 在理想情况下，我们希望用我们所有的数据来进行每一步的训练，因为这能给我们更好的训练结果，但显然这需要很大的计算开销。
+- 所以，每一次训练我们可以使用不同的数据子集，这样做既可以减少计算开销，又可以最大化地学习到数据集的总体特性。
+
+## 四、模型评估
+
+### 4.1 找出预测正确的标签
+
+- `tf.argmax` 是一个非常有用的函数，它能给出某个tensor对象在某一维上的其数据最大值所在的索引值。
+
+- 由于标签向量是由0,1组成，因此**最大值1**所在的索引位置就是类别标签，比如`tf.argmax(y,1)`返回的是模型对于任一输入x预测到的标签值，而 `tf.argmax(y_,1)` 代表正确的标签，我们可以用 `tf.equal`来检测我们的预测是否真实标签匹配(索引位置一样表示匹配)。
+
+  ~~~python
+  correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+  ~~~
+
+- 上述代码，输出一组布尔值，为了确定正确预测项的比例，可以把布尔值转换成浮点数，然后再去平均值。
+
+- 比如，`[True, False, True, True]` 会变成 `[1,0,1,1]` ，取平均值后得到 `0.75`.
+
+  ~~~python
+  accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+  ~~~
+
+- 将学习到的模型在测试数据集上看下正确率
+
+  ~~~python
+  print sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels})
+  ~~~
 
 ## 参考网址
 
