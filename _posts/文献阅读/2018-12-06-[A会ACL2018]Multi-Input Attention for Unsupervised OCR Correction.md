@@ -35,7 +35,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - 很多都是采用人工进行矫正
 
-- 对于商业图书馆的数字化的产生阻碍
+- 对于商业图书馆的数字化产生阻碍
 
 - the scale of these projects not only makes it dif- ficult to adapt ocr models to their diverse layouts and typefaces but also makes it impractical to present any ocr output other than a single-best transcript
 
@@ -93,7 +93,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   基线校正系统是一个具有注意的序列到序列模型(bahdanau等人，2015年)，该模型已被证明在文本校正任务中是有效的(chollampatt等人，2016年；谢等人，2016年)。
 
-- we also seek to improve the correction performance for duplicated texts by integrating multiple inputs.
+- we also seek to improve the correction performance for duplicated texts by integrating multiple inputs.
 
   我们还试图通过集成多个输入来提高重复文本的校正性能。
 
@@ -116,6 +116,14 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 - furthermore, average attention combination, a simple multi-input attention mechanism, is proposed to improve both the effectiveness and efficiency of multi-input combination on the ocr post-correction task.
 
   此外，为了提高多输入组合在OCR后校正任务中的有效性和效率，提出了一种简单的多输入注意组合机制&平均注意组合。
+
+#### 序列到序列模型
+
+![img](https://pic3.zhimg.com/80/v2-74cccb6fc94b5f2cd6046513effd3fd2_hd.jpg)
+
+
+
+
 
 ### 实验
 
@@ -229,7 +237,6 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   类似地，Google网页抓取中至少有25%的页面是重复的
 
-- 
 
 
 ### 论文贡献
@@ -307,28 +314,95 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   用鞋带进行综合训练。
 
-
-
 ### 实验
+
+#### 初步实验
+
+- 单输入模型
+
+  ![](H:\python-workspace\blog\yaolinxia.github.io\img\_20181221165131.png)
+
+- 多输入模型
+
+  ![](H:\python-workspace\blog\yaolinxia.github.io\img\20181221165456.png)
+
+  平均联合attention机制
+
+  等级attention机制展示了平均的证据
+
+  flat attention 
+
 
 #### 训练细节
 
 - 随机把OCR分成了80%的训练，20%的测试
-- 
 
-#### 
+#### 对比试验
 
+最开始的实验，比较翻译模型，
 
+- PCRF，对于单个输入的矫正任务
+- CRF已经被证实是有效的，在后矫正，拼写矫正，以及词形归并方面。
+- 除此之外，比较了不同的多输入attention机制，作为主要的实验
+
+主要实验部分：将矫正模型在不同的训练设置上进行训练
+
+- 两种集成的方法：LMR和多数投票，作为非监督学习的的baseline方法
+
+- LMR chooses a single high-quality witness for each ocr’d line by a language model as the correction for that line.
+
+  LMR通过语言模型为每个OCR‘d行选择一个高质量的证人作为该行的更正。
+
+- majority vote first aligns multiple input sequences using a greedy pairwise algorithm (since multiple sequence alignment is intractable) and then votes on each position in the alignment, with a slight advantage given to the original ocr output in case of ties.
+
+  多数投票首先使用贪婪的成对算法对多个输入序列进行对齐(因为多序列对齐是难以处理的)，然后对齐中的每个位置进行表决，在出现领带的情况下，对原始OCR输出具有轻微的优势。
+
+- we also tried to use an exact unsupervised method for consensus decoding based on dual decomposition (paul and eisner, 2012)
+
+  我们还尝试使用一种完全无监督的基于**对偶分解的共识解码**方法(Paul和Eisner，2012)。
+
+- their implementation, unfortunately, turned out not to return a certificate of completion on most lines in our data even after thousands of iterations.
+
+  不幸的是，即使在数千次迭代之后，它们的实现结果也没有在我们数据中的大多数行上返回完成证书。
+
+### 评估
+
+- word error rate (WER)
+- character error rate (CER)
+
+- lattice word error rate (lwer)[词]
+
+- lattice character error rate (lcer)[字符]
+
+  > 后两种可以衡量每个方法的oracle性能
+
+- 对假设的结果进行修正
+
+- compute the macro average for each type of error rate, which allows us to use a paired permutation significance test
+
+  计算每种错误率的宏平均值，这允许我们使用配对排列显着性检验。
 
 ### 结论
 
+- all results are on the same test set. the multi-input decoding experiments have access to additional witnesses for each line, where available, but fall back to single-input decoding when no additional witnesses are present for a given line.
 
+  所有结果都在同一个测试集上。在可用的情况下，多输入解码实验可以为每一行提供额外的目击者，但当给定线路没有额外的目击者时，则返回到单输入解码。
 
+- 在RDD和TCP上做的实验
 
+- 对于一个给定的行，多输入的解码实验获得了额外的见证
+
+- 基于不同的训练设置，训练我们的模型，包括LMR和主要投票方法majority vote methods
+
+- 多输入解码比单输入有更好的表现（. Multiple input decoding performs better than single input decoding for every training setting, and the model trained in supervised mode with multi-input decoding achieves the best performance.）
+
+- majority vote methods只有多于两个输入时，才有效，在TCP以及RDD上都是表现不好的
+
+- 我们提出的非监督框架，包括Seq2Seq-Noisy和Seq2Seq-Boots比多输入的监督学习方法，效果要好很多
 
 ### 启发
 
-
+·
 
 
 
