@@ -154,7 +154,9 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 print accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels})
 ~~~
 
+### 1.8 dropout
 
+解决神经网络训练过拟合问题，比较有效的缓解过拟合的发生，在一定程度上达到正则化的效果
 
 ## 二、 相关函数
 
@@ -654,6 +656,139 @@ Calculates how often `predictions` matches `labels`.
 
 The `accuracy` function creates two local variables, `total` and `count` that are used to compute the frequency with which `predictions` matches `labels`. This frequency is ultimately returned as `accuracy`: an idempotent operation that simply divides `total` by `count`
 
+### 2.14 tf.random_normal()
+
+tf.random_normal()函数用于从服从指定正太分布的数值中取出指定个数的值。
+
+tf.random_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32, seed=None, name=None)
+
+    shape: 输出张量的形状，必选
+    mean: 正态分布的均值，默认为0
+    stddev: 正态分布的标准差，默认为1.0
+    dtype: 输出的类型，默认为tf.float32
+    seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样
+    name: 操作的名称
+~~~python
+# -*- coding: utf-8 -*-)
+import tensorflow as tf
+ 
+w1 = tf.Variable(tf.random_normal([2, 3], stddev=1, seed=1))
+ 
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    # sess.run(tf.initialize_all_variables())  #比较旧一点的初始化变量方法
+    print w1
+    print sess.run(w1)
+~~~
+
+**输出**
+
+~~~python
+<tf.Variable 'Variable:0' shape=(2, 3) dtype=float32_ref>
+[[-0.81131822  1.48459876  0.06532937]
+ [-2.4427042   0.0992484   0.59122431]]
+~~~
+
+~~~python
+X = tf.random_normal(shape=[3, 5, 6], dtype=tf.float32)
+~~~
+
+**输出**
+
+~~~
+[[[ 1.2145256  -1.1560208  -1.093731    1.2256579   0.7898847
+    0.4307395 ]
+  [ 0.40822104  1.129571    1.5324206   1.0552545  -2.2940836
+    0.6523705 ]
+  [-1.7757286   1.6769009  -2.4429555  -1.0986998   1.4876577
+   -0.5120297 ]
+  [ 0.84597296  0.08493174 -0.13421828  0.8137087   0.10831776
+    0.6971543 ]
+  [-1.5157102   0.5615479   1.5183837   1.2744774  -0.50404435
+   -0.01050083]]
+
+ [[-0.16702758 -0.21784598  1.3655689  -0.5927149   0.00593981
+   -0.44541496]
+  [ 0.9233799   0.8480989   2.1650398  -1.1013446   2.6040213
+   -0.3909698 ]
+  [ 0.43016607 -2.2001355   0.88257426  0.8560082   1.4979376
+    0.18180591]
+  [-0.45241094  0.32941505 -0.90290606 -1.5022529   0.3843127
+   -0.48287177]
+  [-1.0534667  -0.23643473 -0.20744231  0.83963126  0.1148954
+   -0.1779806 ]]
+
+ [[ 0.14691043 -1.522594    0.43237835  1.7798514   0.866155
+   -1.5195131 ]
+  [ 0.8440296  -1.4065892   0.88740623  0.18301357  1.3123437
+   -1.456079  ]
+  [ 0.10538957 -0.2888947  -0.6975345  -0.48583674 -0.6506234
+   -0.30639789]
+  [ 1.8601152   1.2282892  -0.5889973  -0.95935255 -0.33233717
+    0.28872928]
+  [-1.1773086   0.05818317 -1.3115891  -0.22604029  0.17960498
+   -1.4679621 ]]]
+~~~
+
+
+
+
+
+### 2.15 cell.zero_state
+
+~~~python
+init_state = cell.zero_state(3, dtype=tf.float32)
+~~~
+
+**结果**
+
+~~~
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+~~~
+
+### 2.16 tf.nn.rnn_cell.GRUCell
+
+```
+tf.nn.rnn_cell.GRUCell(num_units, input_size=None, activation=<function tanh>).num_units
+就是隐层神经元的个数，默认的activation就是tanh，你也可以自己定义，但是一般都不会去修改。
+这个函数的主要的参数就是num_units。
+```
+
+### 2.17 tf.nn.dynamic_rnn
+
+~~~python
+tf.nn.dynamic_rnn(
+    cell,
+    inputs,
+    sequence_length=None,
+    initial_state=None,
+    dtype=None,
+    parallel_iterations=None,
+    swap_memory=False,
+    time_major=False,
+    scope=None
+)
+~~~
+
+batch_size是输入的这批数据的数量，max_time就是这批数据中序列的最长长度，如果输入的三个句子，那max_time对应的就是最长句子的单词数量，cell.output_size其实就是rnn cell中神经元的个数。
+
+#### output
+
+- 是一个tensor
+- 如果time_major==True，outputs形状为 [max_time, batch_size, cell.output_size ]（要求rnn输入与rnn输出形状保持一致）
+- 如果time_major==False（默认），outputs形状为 [ batch_size, max_time, cell.output_size ]
+
+#### state
+
+- 是一个tensor
+
+- state是最终的状态， 也就是序列中最后一个cell输出的状态
+
+- 一般情况下state的形状为 [batch_size, cell.output_size ]，但当输入的cell为BasicLSTMCell时，state的形状为[2，batch_size, cell.output_size ]，其中2也对应着LSTM中的cell state和hidden state
+
+
 ## 三、模型的训练
 
 ### 3.1 定义指标
@@ -896,3 +1031,4 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
 
 - <https://www.jianshu.com/p/e5076a56946c>
 - <https://yiyibooks.cn/yiyi/tensorflow_13/get_started/get_started.html>
+- https://blog.csdn.net/u010960155/article/details/81707498【tf.nn.dynamic_rnn】
