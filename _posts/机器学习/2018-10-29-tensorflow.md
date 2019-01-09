@@ -756,6 +756,8 @@ tf.nn.rnn_cell.GRUCell(num_units, input_size=None, activation=<function tanh>).n
 这个函数的主要的参数就是num_units。
 ```
 
+![](H:\python-workspace\blog\yaolinxia.github.io\img\微信截图_20190109215129.png)
+
 ### 2.17 tf.nn.dynamic_rnn
 
 ~~~python
@@ -787,6 +789,30 @@ batch_size是输入的这批数据的数量，max_time就是这批数据中序�
 - state是最终的状态， 也就是序列中最后一个cell输出的状态
 
 - 一般情况下state的形状为 [batch_size, cell.output_size ]，但当输入的cell为BasicLSTMCell时，state的形状为[2，batch_size, cell.output_size ]，其中2也对应着LSTM中的cell state和hidden state
+
+### 2.18  tf.reshape
+
+~~~python
+images = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])  
+d = images.reshape((-1, 1, 2, 1))                  
+print(d)                                       
+~~~
+
+**输出结果：**
+
+~~~
+[[[[1]
+   [2]]]
+ [[[3]
+   [4]]]
+ [[[5]
+   [6]]]
+ [[[7]
+   [8]]]
+ [[[9]
+   [0]]]]
+~~~
+
 
 
 ## 三、模型的训练
