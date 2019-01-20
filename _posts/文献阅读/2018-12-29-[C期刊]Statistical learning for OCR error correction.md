@@ -30,7 +30,7 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 #### 标记tokenization
 
-- 实验姑姑n-gram标记，并且包含额外的规则，处理特殊的标记
+- 实验给出n-gram标记，并且包含额外的规则，处理特殊的标记
 
 #### 检测特征集
 
@@ -60,6 +60,8 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 
 #### 候选置信度预测   
+
+
 
 #### 错误重复选择
 

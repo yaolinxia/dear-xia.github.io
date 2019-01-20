@@ -7,6 +7,8 @@ tag: 文献阅读
 [David Smith](https://dblp.uni-trier.de/pers/hd/s/Smith:David), [Rui Dong](https://dblp.uni-trier.de/pers/hd/d/Dong:Rui):
 Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://dblp.uni-trier.de/db/conf/acl/acl2018-1.html#SmithD18): 2363-2372
 
+[TOC]
+
 ### 问题备注
 
 - 无监督的OCR矫正
@@ -119,23 +121,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 #### 序列到序列模型
 
-![img](https://pic3.zhimg.com/80/v2-74cccb6fc94b5f2cd6046513effd3fd2_hd.jpg)
-
-
-
-
-
-### 实验
-
-- 分别在监督和非监督训练集上训练
-
-- we experiment with both supervised and unsupervised training and with single- and multi-input decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
-
-  我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段：
-
-- for both collections, which were manually transcribed by other researchers and are in the public  domain, we aligned the one-best output of an ocr system to the manual transcripts.
-
-  对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
+![](H:\python-workspace\blog\yaolinxia.github.io\img\微信截图_20190115185038.png)
 
 ### 数据
 
@@ -151,11 +137,11 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
 
-- we also aligned the ocr in the training and evaluation sets to other public-domain newspaper issues (from the library of congress) and books (from the internet archive) to find multiple duplicates as “witnesses”, where available, for each line.
+- we also aligned the ocr in the training and evaluation sets to other public-domain newspaper issues (from the library of congress) and books (from the inter-net archive) to find multiple duplicates as “witnesses”, where available, for each line.
 
   我们还将培训和评估集中的OCR与其他公共领域的报纸问题(来自国会图书馆)和书籍(来自互联网档案)进行调整，以便为每一行找到多份作为“见证者”的副本。
 
-- experimental results on both datasets show that our proposed averarge attention combination mechanism is more effective than existing methods in integrating multiple inputs.
+- experimental results on both datasets show that our proposed average attention combination mechanism is more effective than existing methods in integrating multiple inputs.
 
   在这两个数据集上的实验结果表明，我们提出的平均注意力组合机制比现有的多输入融合方法更有效。
 
@@ -261,6 +247,10 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ### 方法
 
+- 先训练一个OCR的错误矫正模型，通过基于attention机制的端到端的RNN编码解码，将单输入的OCR错误矫正模型作为输入，输出是经过矫正后的文本
+- 在解码阶段，多输入的attention联合策略，可以使得解码器能够从多输入中整合信息
+- 最后讨论了几种在矫正模型中的非监督的设置
+
 #### 问题
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2u61ksndj20h408xmzd.jpg)
@@ -284,12 +274,6 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy319q9mvrj20gv0cqdhy.jpg)
 
-
-
-
-
-
-
 #### 几种非监督方法(训练设置)
 
 训练矫正模型
@@ -299,6 +283,8 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 - seq2seq-super
 
   seq2seq-超级
+
+- 将每一个OCR的对应的行，与人工标注的抄本进行一一对应（人工标注）
 
 ##### 无监督
 
@@ -316,6 +302,16 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ### 实验
 
+- 分别在监督和非监督训练集上训练
+
+- we experiment with both supervised and unsupervised training and with single- and multi-input decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
+
+  我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段：
+
+- for both collections, which were manually transcribed by other researchers and are in the public  domain, we aligned the one-best output of an ocr system to the manual transcripts.
+
+  对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
+
 #### 初步实验
 
 - 单输入模型
@@ -325,6 +321,10 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 - 多输入模型
 
   ![](H:\python-workspace\blog\yaolinxia.github.io\img\20181221165456.png)
+
+
+
+
 
   平均联合attention机制
 
