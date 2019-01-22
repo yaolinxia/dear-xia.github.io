@@ -65,7 +65,15 @@ tag: 文献阅读
 
 ![](E:\yaolinxia\workspace\practice\practice\images\flask\微信截图_20190117180331.png)
 
+### 基线
 
+- 严格定义了QA问题
+
+- 给定两个输入引用的序列；
+
+  > 背景向量context：Xc = {w1c, w2c, ...., wnc}
+  >
+  > 问题向量query：XQ = {w1Q, w2Q, ..., WmQ}
 
 
 
