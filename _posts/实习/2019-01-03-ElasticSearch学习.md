@@ -417,15 +417,19 @@ curl -X GET "localhost:9200/bank/_search" -H 'Content-Type: application/json' -d
 '
 ~~~
 
-![image.png](E:\yaolinxia\workspace\practice\practice\images\image (14).png)
+![](E:\yaolinxia\workspace\practice\practice\images\image (14).png)
+
+
 
 
 
 ![](E:\yaolinxia\workspace\practice\practice\images\image (15).png)
 
-![image (16)](E:\yaolinxia\workspace\practice\practice\images\image (16).png)
+![](E:\yaolinxia\workspace\practice\practice\images\image (16).png)
 
-![image (17)](E:\yaolinxia\workspace\practice\practice\images\image (17).png)
+
+
+![](E:\yaolinxia\workspace\practice\practice\images\image (17).png)
 
 # 参考网址
 
