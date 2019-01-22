@@ -151,7 +151,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   此外，通过对重复文本进行多输入解码，我们的噪声纠错模型达到了与监督模型相当的性能。
 
-#### 数据收集
+#### 数据收集data collection
 
 - 从两个来源中选择一个最好的OCR输出， 基于此之上，做实验。1）美国历史新闻——200万，2）公共领域300万存档
 
@@ -181,7 +181,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - an inverted index of hashes of word 5-grams was produced, and then all pairs from different pages in the same posting list were extracted
 
-  生成了一个单词5-克的倒哈希索引，然后从同一发帖列表中的不同页面中提取所有对。
+  生成了一个单词为5-gram的倒哈希索引，然后从同一发帖列表中的不同页面中提取所有对。
 
 - pairs of pages with more than five shared hashed 5-grams were aligned with the smith-waterman algorithm with equal costs for insertion, deletion, and substitution, which returns a maximally aligned subsequence in each pair of pages
 
@@ -219,7 +219,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - although not all ocr collections will have this level of repetition, it is notable that these collections, which are some of the largest public-domain digital libraries, do exhibit this kind of reprinting.
 
-  虽然并非所有的OCR藏品都会有这种程度的重复，但值得注意的是，这些收藏是一些最大的公共领域数字图书馆，确实展示了这种重印。
+  虽然并非所有的OCR收集都会有这种程度的重复，但值得注意的是，这些收藏是一些最大的公共领域数字图书馆，确实展示了这种重印。
 
 - similarly, at least 25% of the pages in google’s web crawls are duplicates
 
@@ -257,6 +257,14 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2u61ksndj20h408xmzd.jpg)
 
+> 字符序列[x1, x2, x3, ..., xTs]
+>
+> 目标：通过p(y|x)模型，将序列映射到无错的文本y=[y1, y2, ..., yTt]
+>
+> p(y|X)， 寻找重复文本X中的一致性
+>
+> X = [X1, X2, ...XN].理解XN 为每一行
+
 #### 模型
 
 - 基于注意力的端到端模型
@@ -276,6 +284,25 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy319q9mvrj20gv0cqdhy.jpg)
 
+- 已经训练出了模型p(y|x)
+- 目标：联合多输入的序列X, 生成目标序列y，为了在解码的时候，假设序列X=[X1, X2, ..., XN]被观察到，其中每一个序列Xl = [xl,1.......Xl,tl], Tl指长度
+- 可以生成隐藏层的序列hl, 在解码搜寻时， 通过编码阶段的隐藏状态H, 计算全局的上下文向量ct     
+- 采用了不同的联合attention机制
+
+##### Flat Attention Combination
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/20190122174437.png)
+
+- flat attention combination is similar to singleinput decoding in that it concatenates all inputs into a long sequence, except that the encoder hidden states are computed independently for each input.
+
+  平面注意力组合类似于单输入解码，因为它将所有输入串联成一个长序列，除了对每个输入独立计算编码器隐藏状态之外。
+
+##### **Hierarchical Attention Combination**
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/20190122175001.png)
+
+
+
 #### 几种非监督方法(训练设置)
 
 训练矫正模型
@@ -292,7 +319,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - in the absence of ground truth transcriptions, we can use different methods to generate a noisy corrected version for each ocr’d line
 
-  在没有地面真实转录的情况下，我们可以使用不同的方法为每条OCR D线生成一个有噪声的校正版本
+  在没有地面真实转录的情况下，我们可以使用不同的方法为每条OCR的文本线生成一个有噪声的校正版本
 
 - 噪声训练
 
@@ -404,17 +431,20 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ### 启发
 
-·
+- 类似集成学习的方法，利用不同的预测结果，进行一个互补操作
+- 已有的训练结果cnn, tasseract, gru，可以先用这三个，来进行一个整合， 进行相互互补
 
 
 
+### 疑问
 
+- witnesses这边指的是什么？
 
-
+- 它所用的对齐方法是怎么实现的？重复指的是什么？
 
 ### Attention机制
 
-
+- 详细见博客<https://yaolinxia.github.io/2019/01/attention/>
 
 ### 参考文献
 
