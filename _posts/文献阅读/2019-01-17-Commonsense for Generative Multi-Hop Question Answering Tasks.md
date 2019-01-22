@@ -63,7 +63,7 @@ tag: 文献阅读
 
 ##　模型解读
 
-![](E:\yaolinxia\workspace\practice\practice\images\flask\微信截图_20190117180331.png)
+![](images\微信截图_20190117180331.png)
 
 ### baseline
 
@@ -81,11 +81,30 @@ tag: 文献阅读
 
 - 这些标记为嵌入到学习到的词向量learned word embeddings，以及预训练好的背景意识词向量pretrained context-aware embeddings (ELMo)
 
+- we embed each word from the context and question with a learned embedding space of dimension d
+
+  我们将上下文和问句中的每个单词嵌入到一个学习的d维嵌入空间中。
+
+- 从1024维的预训练语言模型（ELMo）中获取上下文词向量
+
 ### reasoning layer
 
 - 嵌入的上下文通过k个推理单元reasoning cell进行传递
 - 通过BiDAF attention 从查询中的信息，更新上下文表示context representation
 - 通过多步骤推理过程， 计算一个单独的推理步骤
+- 使用双向LSTM
+
+![](..\文献阅读\images\微信截图_20190122141434.png)
+
+
+
+- emulate a hop of reasoning by focusing on relevant aspects of the context
+
+  通过专注于上下文的相关方面来模仿推理的跳跃。
+
+- 计算context-to-query attention
+
+  ![](images\微信截图_20190122142051.png)
 
 ### self-attention layer
 
@@ -101,13 +120,4 @@ tag: 文献阅读
 
 - 生成答案
 
-
-
-
-
-
-
-![](一审.png)
-
-![](images/微信截图_20181221164456.png)
-
+![](images\微信截图_20181221164456.png)
