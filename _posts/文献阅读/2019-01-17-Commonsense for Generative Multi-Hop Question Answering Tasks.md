@@ -106,11 +106,41 @@ tag: 文献阅读
 
   ![](images\微信截图_20190122142051.png)
 
+  ![](images\微信截图_20190122142600.png)
+
+![](images\微信截图_20190122142723.png)
+
+- elementwise multiplication
+
+  元素乘法
+
+  ct: cell的输出
+
+- 最开始推理层的输入是嵌入的context representation, 比如 c0 = eC
+
+- 最终推理层的输出是last cell , ck
+
 ### self-attention layer
 
 - the context representation is passed through a layer of self-attention (cheng et al., 2016) to resolve long-term dependencies and co-reference within the context
 
   上下文表示通过self-attention(Cheng等人，2016)来解决上下文中的长期依赖和共同引用。
+
+- 这一层的输入是上一层的最终的reasoning cell ck
+
+- 我们首先通过一个全连接层， 然后加上一个双向LSTM来获取另一个背景cSA的代表
+
+- 获取了c'
+
+![](images\微信截图_20190122143720.png)
+
+![](images\微信截图_20190122143808.png)
+
+> self-attention的输出是由双向LSTM的另一层产生
+
+- finally, we add this residually to ck to obtain the encoded context c = ck + c‘’.
+
+  最后，我们将该残差添加到CK以获得编码的上下文C。
 
 ### pointer_generater Decoding layer 
 
@@ -121,3 +151,4 @@ tag: 文献阅读
 - 生成答案
 
 ![](images\微信截图_20181221164456.png)
+
