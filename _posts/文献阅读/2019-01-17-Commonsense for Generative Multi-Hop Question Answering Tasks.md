@@ -65,7 +65,7 @@ tag: 文献阅读
 
 ![](./images/微信截图_20190117180331.png)
 
-![](E:\yaolinxia\workspace\yaolinxia.github.io\_posts\文献阅读\images\微信截图_20190122143808.png)
+![](E:\yaolinxia\workspace\yaolinxia.github.io\img\微信截图_20190114163311.png)
 
 ### baseline
 
