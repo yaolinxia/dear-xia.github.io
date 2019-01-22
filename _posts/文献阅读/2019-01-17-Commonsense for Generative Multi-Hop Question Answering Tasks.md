@@ -63,9 +63,7 @@ tag: 文献阅读
 
 ## 模型解读
 
-![](./images/微信截图_20190117180331.png)
-
-![](E:\yaolinxia\workspace\yaolinxia.github.io\img\微信截图_20190114163311.png)
+![](./images/_20190117180331.png)
 
 ### baseline
 
