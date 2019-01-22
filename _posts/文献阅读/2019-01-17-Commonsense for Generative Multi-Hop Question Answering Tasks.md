@@ -65,7 +65,7 @@ tag: 文献阅读
 
 ![](E:\yaolinxia\workspace\practice\practice\images\flask\微信截图_20190117180331.png)
 
-### 基线
+### baseline
 
 - 严格定义了QA问题
 
@@ -74,12 +74,38 @@ tag: 文献阅读
   > 背景向量context：Xc = {w1c, w2c, ...., wnc}
   >
   > 问题向量query：XQ = {w1Q, w2Q, ..., WmQ}
+  >
+  > 系统应该生成回答引用Xa = {w1q, w2q, ...，wpa}
+
+### embedding layer
+
+- 这些标记为嵌入到学习到的词向量learned word embeddings，以及预训练好的背景意识词向量pretrained context-aware embeddings (ELMo)
+
+### reasoning layer
+
+- 嵌入的上下文通过k个推理单元reasoning cell进行传递
+- 通过BiDAF attention 从查询中的信息，更新上下文表示context representation
+- 通过多步骤推理过程， 计算一个单独的推理步骤
+
+### self-attention layer
+
+- the context representation is passed through a layer of self-attention (cheng et al., 2016) to resolve long-term dependencies and co-reference within the context
+
+  上下文表示通过self-attention(Cheng等人，2016)来解决上下文中的长期依赖和共同引用。
+
+### pointer_generater Decoding layer 
+
+- a attention-pointer-generator decoder (see et al., 2017) that attends on and potentially copies from the context is used to create the answer.
+
+  关注 attention-pointer-generator解码器(参见等人，2017)用于创建答案，并可能从上下文中复制。
+
+- 生成答案
+
+![](/images/favicon.png)
 
 
 
+![](一审.png)
 
-
-
-
-
+![](images/微信截图_20181221164456.png)
 
