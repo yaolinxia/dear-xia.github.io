@@ -65,6 +65,8 @@ tag: 文献阅读
 
 ![](./images/微信截图_20190117180331.png)
 
+![](E:\yaolinxia\workspace\yaolinxia.github.io\_posts\文献阅读\images\微信截图_20190122143808.png)
+
 ### baseline
 
 - 严格定义了QA问题
