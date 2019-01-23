@@ -56,7 +56,7 @@ tag: 机器学习
 
 - Encoder-Decoder是个创新游戏大杀器，一方面如上所述，可以搞各种不同的模型组合，另外一方面它的应用场景多得不得了，比如对于机器翻译来说，<X,Y>就是对应不同语言的句子，比如X是英语句子，Y是对应的中文句子翻译。再比如对于文本摘要来说，X就是一篇文章，Y就是对应的摘要；再比如对于对话机器人来说，X就是某人的一句话，Y就是对话机器人的应答；再比如……总之，太多了。哎，那位施主，听老衲的话，赶紧从天台下来吧，无数创新在等着你发掘呢。
 
-## attention
+# 详细解释
 
 - 在encoder-decoder基础上，引入AM模型
 - 给定一个概率分布值`（Tom,0.3）(Chase,0.2) (Jerry,0.5)`
@@ -80,18 +80,48 @@ tag: 机器学习
   >
   > g:代表Encoder根据单词的中间表示合成整个句子中间语义表示的变换函数， 一般， g函数就是构成元素的加权求和
 
-### 公式
+## 模型一般结构
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/v2-163c0c3dda50d1fe7a4f7a64ba728d27_hd.jpg)
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190123170710.png)
+
+
+
+
+
+## 公式
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190118173449.png)
 
-- Ci ：Ci中那个i就是上面的“汤姆”、
+> i表示encoder端的第i个词，
+>
+> hj表示encoder端的第j词的隐向量，
+>
+> aij表示encoder端的第j个词与decoder端的第i个词之间的权值，表示源端第j个词对目标端第i个词的影响程度，
+
+- Ci ：Ci中那个i就是上面的“汤姆”
 - Tx：对应上面的3，代表输入句子的长度
 - h1=f(“Tom”)，h2=f(“Chase”), h3=f(“Jerry”)
 - 注意力模型权值分别为0.6， 0.2， 0.2
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/20160120182034485.png)
 
-### 概率分布值
+- aij的计算公式如下
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190123165509.png)
+
+> aij是一个softmax模型输出，概率值的和为1;
+>
+> eij表示一个对齐模型，用于衡量encoder端的位置j个词，对于decoder端的位置i个词的对齐程度（影响程度）== decoder端生成位置i的词时，有多少程度受encoder端的位置j的词影响。
+
+- 对齐模型eij的计算方式有很多种，不同的计算方式，代表不同的Attention模型，最简单且最常用的的对齐模型是dot product乘积矩阵，即把target端的输出隐状态ht与source端的输出隐状态进行矩阵乘。常见的对齐计算方式如下：
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190123170059.png)
+
+> 其中,Score(ht,hs) = aij表示源端与目标单单词对齐程度。可见，常见的对齐关系计算方式有，点乘（Dot product），权值网络映射（General）和concat映射几种方式。
+
+## 概率分布值
 
 **存在问题**：如何知道AM模型所需要输入的句子单词注意力概率分布值？
 
@@ -111,7 +141,7 @@ tag: 机器学习
 >
 > F函数在不同论文里可能会采取不同的方法，然后函数F的输出经过Softmax进行归一化就得到了符合概率分布取值区间的注意力分配概率分布数值
 
-### 物理含义
+## 物理含义
 
 - 一般会把AM模型看作时单词对齐模型
 
@@ -119,8 +149,74 @@ tag: 机器学习
 - 传统的统计机器翻译一般在做的过程中会专门有一个短语对齐的步骤，而注意力模型其实起的是相同的作用
 - AM模型理解成影响力模型也是合理的，就是说生成目标单词的时候，输入句子每个单词对于生成这个单词有多大的影响程度。这种想法也是比较好理解AM模型物理意义的一种思维方式
 
+## 分类
+
+### Flat Attention
+
+### **Global Attention**
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/v2-ed29617ad6c722ecbec1b4594bd7a375_hd.jpg)
+
+> ht : decoder的隐状态
+>
+> hs: 源端的隐状态
+>
+> at: 变长的隐对齐权值向量
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/v2-cd145f558eeee75b86145def0684b0d1_hd.jpg)
+
+- score是一个用于评价ht与hs之间关系的函数，即对齐函数，一般有三种计算方式
+- 得到对齐向量at之后，就可以通过加权平均的方式，得到上下文向量ct
+
+### **Local Attention：**
+
+- Global Attention有一个明显的缺点就是，每一次，encoder端的所有hidden state都要参与计算，这样做计算开销会比较大，特别是当encoder的句子偏长，比如，一段话或者一篇文章，效率偏低。
+- 为提高效率而产生
+- 是一种介于Kelvin Xu所提出的Soft Attention和Hard Attention之间的一种Attention方式
+
+![img](https://pic1.zhimg.com/80/v2-e4a3e42e7316ef872e9d0d579b8bc52c_hd.jpg)
+
+- Local Attention首先会为decoder端当前的词，预测一个source端对齐位置（aligned position）pt，然后基于pt选择一个窗口，用于计算背景向量ct。Position pt的计算公式如下：
+
+![img](https://pic1.zhimg.com/80/v2-6ef8efcc11844625244857d60d9eabb4_hd.jpg)
+
+- 其中，S是encoder端句子长度，vp和wp是模型参数。此时，对齐向量at的计算公式如下：
+
+![img](https://pic1.zhimg.com/80/v2-145309bab612ece99e604613818fbde0_hd.jpg)
+
+### **Self Attention**
+
+- Self Attention与传统的Attention机制非常的不同：传统的Attention是基于source端和target端的隐变量（hidden state）计算Attention的，得到的结果是源端的每个词与目标端每个词之间的依赖关系。
+
+- Self Attention不同，它分别在source端和target端进行，仅与source input或者target input自身相关的Self Attention，捕捉source端或target端自身的词与词之间的依赖关系；然后再把source端的得到的self Attention加入到target端得到的Attention中，捕捉source端和target端词与词之间的依赖关系。
+
+- self Attention Attention比传统的Attention mechanism效果要好，主要原因之一是，传统的Attention机制忽略了源端或目标端句子中词与词之间的依赖关系，相对比，self Attention可以不仅可以得到源端与目标端词与词之间的依赖关系，同时还可以有效获取源端或目标端自身词与词之间的依赖关系
+
+  ![img](https://pic4.zhimg.com/80/v2-3c164abbdfca339bc31ec28ef8e44ebf_hd.jpg)
+
+  ![img](https://pic1.zhimg.com/80/v2-0849d549f18e5ab4e45e8b23487f1698_hd.jpg)
+
+- Encoder的输入inputs和decoder的输入outputs，加上position embedding，做为各自的最初的输入，那么问题来了，self Attention具体是怎么实现的呢？从All Attention的结构示意图可以发现，Encoder和decoder是层叠了多个类似的Multi-Head Attention单元构成，而每一个Multi-Head Attention单元由多个结构相似的Scaled Dot-Product Attention单元组成
+
+![preview](https://pic2.zhimg.com/v2-b78048486fac3b1b257409bcd7d779bd_r.jpg)
+
+- Self Attention也是在Scaled Dot-Product Attention单元里面实现的，如上图左图所示，首先把输入Input经过线性变换分别得到Q、K、V，注意，Q、K、V都来自于Input，只不过是线性变换的矩阵的权值不同而已。然后把Q和K做dot Product相乘，得到输入Input词与词之间的依赖关系，然后经过尺度变换（scale）、掩码（mask）和softmax操作，得到最终的Self Attention矩阵。尺度变换是为了防止输入值过大导致训练不稳定，mask则是为了保证时间的先后关系。
+- 最后，把encoder端self Attention计算的结果加入到decoder做为k和V，结合decoder自身的输出做为q，得到encoder端的attention与decoder端attention之间的依赖关系。
+
+### **Hierarchical Attention**
+
+- Zichao Yang等人在论文《Hierarchical Attention Networks for Document Classification》提出了Hierarchical Attention用于文档分类。Hierarchical Attention构建了两个层次的Attention Mechanism，第一个层次是对句子中每个词的attention，即word attention；第二个层次是针对文档中每个句子的attention，即sentence attention。
+
+![img](https://pic2.zhimg.com/80/v2-5046bdab04a0e964526f8ce487fdf855_hd.jpg)
+
+- 整个网络结构由四个部分组成：一个由双向RNN（GRU）构成的word sequence encoder，然后是一个关于词的word-level的attention layer；基于word attention layar之上，是一个由双向RNN构成的sentence encoder，最后的输出层是一个sentence-level的attention layer。
+- 
+
+
+
 # 参考网址、文献
 
 - 《Sequence to Sequence Learning with Neural Networks》
 - 《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》
 - <https://blog.csdn.net/xiewenbo/article/details/79382785>
+- <https://zhuanlan.zhihu.com/p/31547842>

@@ -150,6 +150,14 @@ tag: 文献阅读
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/QQ图片20190123153337.png)
 
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190123160601.png)
+
+## Commonsense Selection and Representation
+
+- in qa tasks that require multiple hops of reasoning, the model often needs knowledge of relations not directly stated in the context to reach the correct conclusion. in the datasets we consider, manual analysis shows that external knowledge is frequently needed for inference (see table 1).
+
+  在需要多次跳转推理的QA任务中，模型往往需要对上下文中没有直接陈述的关系的知识才能得出正确的结论。在我们考虑的数据集中，手工分析表明，推断经常需要外部知识(见表1)。
+
 
 
 
