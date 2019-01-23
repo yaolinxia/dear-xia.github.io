@@ -94,9 +94,7 @@ tag: 文献阅读
 - 通过多步骤推理过程， 计算一个单独的推理步骤
 - 使用双向LSTM
 
-![](../文献阅读\images\微信截图_20190122141434.png)
-
-
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122141434.png)
 
 - emulate a hop of reasoning by focusing on relevant aspects of the context
 
@@ -104,11 +102,11 @@ tag: 文献阅读
 
 - 计算context-to-query attention
 
-  ![](images\微信截图_20190122142051.png)
+  ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122142051.png)
 
-  ![](images\微信截图_20190122142600.png)
+  ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122142600.png)
 
-![](images\微信截图_20190122142723.png)
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122142723.png)
 
 - elementwise multiplication
 
@@ -132,9 +130,9 @@ tag: 文献阅读
 
 - 获取了c'
 
-![](images\微信截图_20190122143720.png)
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122143720.png)
 
-![](images\微信截图_20190122143808.png)
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190122143808.png)
 
 > self-attention的输出是由双向LSTM的另一层产生
 
@@ -150,4 +148,18 @@ tag: 文献阅读
 
 - 生成答案
 
-![](images\微信截图_20181221164456.png)
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/QQ图片20190123153337.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20181221164456.png)
