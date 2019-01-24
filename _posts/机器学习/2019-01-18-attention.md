@@ -151,7 +151,7 @@ tag: 机器学习
 
 ## 分类
 
-### Flat Attention
+### **Flat Attention**
 
 ### **Global Attention**
 
