@@ -174,15 +174,19 @@ tag: 机器学习
 - 为提高效率而产生
 - 是一种介于Kelvin Xu所提出的Soft Attention和Hard Attention之间的一种Attention方式
 
-![img](https://pic1.zhimg.com/80/v2-e4a3e42e7316ef872e9d0d579b8bc52c_hd.jpg)
+![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124163424.png)
+
+
 
 - Local Attention首先会为decoder端当前的词，预测一个source端对齐位置（aligned position）pt，然后基于pt选择一个窗口，用于计算背景向量ct。Position pt的计算公式如下：
 
-![img](https://pic1.zhimg.com/80/v2-6ef8efcc11844625244857d60d9eabb4_hd.jpg)
+![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164046.png)
 
 - 其中，S是encoder端句子长度，vp和wp是模型参数。此时，对齐向量at的计算公式如下：
 
-![img](https://pic1.zhimg.com/80/v2-145309bab612ece99e604613818fbde0_hd.jpg)
+![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164117.png)
+
+
 
 ### **Self Attention**
 
@@ -192,13 +196,15 @@ tag: 机器学习
 
 - self Attention Attention比传统的Attention mechanism效果要好，主要原因之一是，传统的Attention机制忽略了源端或目标端句子中词与词之间的依赖关系，相对比，self Attention可以不仅可以得到源端与目标端词与词之间的依赖关系，同时还可以有效获取源端或目标端自身词与词之间的依赖关系
 
-  ![img](https://pic4.zhimg.com/80/v2-3c164abbdfca339bc31ec28ef8e44ebf_hd.jpg)
+  ![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164442.png)
 
-  ![img](https://pic1.zhimg.com/80/v2-0849d549f18e5ab4e45e8b23487f1698_hd.jpg)
+
+
+  ![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164603.png)
 
 - Encoder的输入inputs和decoder的输入outputs，加上position embedding，做为各自的最初的输入，那么问题来了，self Attention具体是怎么实现的呢？从All Attention的结构示意图可以发现，Encoder和decoder是层叠了多个类似的Multi-Head Attention单元构成，而每一个Multi-Head Attention单元由多个结构相似的Scaled Dot-Product Attention单元组成
 
-![preview](https://pic2.zhimg.com/v2-b78048486fac3b1b257409bcd7d779bd_r.jpg)
+![preview](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164653.png)
 
 - Self Attention也是在Scaled Dot-Product Attention单元里面实现的，如上图左图所示，首先把输入Input经过线性变换分别得到Q、K、V，注意，Q、K、V都来自于Input，只不过是线性变换的矩阵的权值不同而已。然后把Q和K做dot Product相乘，得到输入Input词与词之间的依赖关系，然后经过尺度变换（scale）、掩码（mask）和softmax操作，得到最终的Self Attention矩阵。尺度变换是为了防止输入值过大导致训练不稳定，mask则是为了保证时间的先后关系。
 - 最后，把encoder端self Attention计算的结果加入到decoder做为k和V，结合decoder自身的输出做为q，得到encoder端的attention与decoder端attention之间的依赖关系。
@@ -207,10 +213,9 @@ tag: 机器学习
 
 - Zichao Yang等人在论文《Hierarchical Attention Networks for Document Classification》提出了Hierarchical Attention用于文档分类。Hierarchical Attention构建了两个层次的Attention Mechanism，第一个层次是对句子中每个词的attention，即word attention；第二个层次是针对文档中每个句子的attention，即sentence attention。
 
-![img](https://pic2.zhimg.com/80/v2-5046bdab04a0e964526f8ce487fdf855_hd.jpg)
+![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164728.png)
 
 - 整个网络结构由四个部分组成：一个由双向RNN（GRU）构成的word sequence encoder，然后是一个关于词的word-level的attention layer；基于word attention layar之上，是一个由双向RNN构成的sentence encoder，最后的输出层是一个sentence-level的attention layer。
-- 
 
 
 

@@ -158,7 +158,64 @@ tag: 文献阅读
 
   在需要多次跳转推理的QA任务中，模型往往需要对上下文中没有直接陈述的关系的知识才能得出正确的结论。在我们考虑的数据集中，手工分析表明，推断经常需要外部知识(见表1)。
 
+- 概念之间总是有细微差距， 当推理一个问题时，采取正确的这些概念
 
+- even with a large amount of training data, it is very unlikely that a model is able to learn every nuanced relation between concepts
+
+  即使有大量的培训数据，模型也不太可能了解概念之间的每一个细微关系。
+
+- 从ConceptNet中引入的关系，来补救信息
+
+- we remedy this issue by introducing grounded commonsense (background) information using relations between concepts from ConceptNet (speer and havasi, 2012)1 that help inference by introducing useful connections between concepts in the context and question.
+
+  我们通过引入基于常识(背景)的概念之间的关系来纠正这一问题，通过在上下文和问题中引入概念之间的有用联系来帮助推断。
+
+- 我们需要一个有效的方法来选择关系，这些提供了异常的信息
+- 通过构造树的方法
+- 标记和过滤这些路径来确保添加信息的质量和多样性，通过三步走的得分策略（初始化结点得分）累计结点得分，进行路径选择。
+
+### Tree Construction
+
+- 给定上下文C和问题Q
+
+- we want to construct paths grounded in the pair that emulate reasoning steps required to answer the question.
+
+  我们希望构建基于对的路径，以模拟回答问题所需的推理步骤。
+
+- in this section, we build ‘prototype’ paths by constructing trees rooted in concepts in the query with the following branching steps3 to emulate multihop reasoning process.
+
+  在本节中，我们通过构建基于查询中概念的树来构建“原型”路径，并通过以下分支步骤3来模拟多跳推理过程。
+
+#### Direct Interaction
+
+- 从ConceptNet中选择r1, 直接连接c1
+-  lady—> church, lady —> mother, lady!—>person
+
+#### Multi - Hop
+
+- 从ConceptNet中选择r2, 连接c2到另一个概念c3
+- 模仿一个潜在的推理跳转在MRC任务中
+
+#### Outside Knowledge
+
+- 允许一个不受约束的跳跃到c3的邻居
+
+- this emulates the gathering of useful external information to complete paths within the context
+
+  这将模拟收集有用的外部信息以完成上下文中的路径。
+
+#### context-grounding
+
+环境-接地
+
+- 为了确保外部的知识对于该任务是真正有帮助的，显示连接第二维度
+
+### Rank and Filter
+
+- 树的构造可以收集大量的潜在，相关或者有用的数据， 但是同时这些步骤也可能会引入噪声， 得到和问题不相关的答案
+- 所以，引入3步走的得分方法
+
+#### Initial Node Scoring
 
 
 
