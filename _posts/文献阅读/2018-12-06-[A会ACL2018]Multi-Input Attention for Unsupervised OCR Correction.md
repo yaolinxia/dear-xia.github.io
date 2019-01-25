@@ -301,7 +301,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/20190122175001.png)
 
-
+3
 
 #### 几种非监督方法(训练设置)
 
