@@ -7,15 +7,15 @@ tag: 文献阅读
 [David Smith](https://dblp.uni-trier.de/pers/hd/s/Smith:David), [Rui Dong](https://dblp.uni-trier.de/pers/hd/d/Dong:Rui):
 Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://dblp.uni-trier.de/db/conf/acl/acl2018-1.html#SmithD18): 2363-2372
 
-[TOC]
 
 
 
-### 问题备注
+
+# 问题备注
 
 - 无监督的OCR矫正
 
-### 摘要
+# 摘要
 
 - we propose a novel approach to ocr post-correction that exploits repeated texts in large corpora both as a source of noisy target outputs for unsupervised training and as a source of evidence when decoding.
 
@@ -33,7 +33,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   在两个历史报刊和书籍的语料库中，我们证明了这些非监督技术在单一输入上将字符和单词错误率降低了近一半，加上多输入解码，可以与有监督的方法相媲美。
 
-### 目前存在的相关问题
+# 目前存在的相关问题
 
 - 目前ocr软件，对于低质量的文本扫描存在问题
 
@@ -45,7 +45,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   这些项目的规模不仅使得使ocr模型适应其多样化的布局和字体变得不现实，而且除了一份最好的成绩单之外，还使任何ocr的输出都变得不切实际。
 
-### 目前解决方法
+# 目前解决方法
 
 - existing methods for automatic ocr postcorrection are mostly supervised methods that correct recognition errors in a single ocr output
 
@@ -65,7 +65,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   此外，基于投票的集成方法(Lund和Ringger，2009年；wemhoener等人，2013年；许和史密斯，2017年)只在一种输入中存在正确产出的情况下工作，而分类方法(Boschetti等人，2009年；Lund等人，2011年；al Azawi等人，2015年)也接受了关于人工注释的培训。
 
-### 本实验所采用方法
+# 本实验所采用方法
 
 - to address these challenges, we propose an unsupervised ocr post-correction framework both to correct single input text sequences and also to exploit multiple candidate texts by simultaneously aligning, correcting, and voting among input sequences.
 
@@ -121,11 +121,11 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   此外，为了提高多输入组合在OCR后校正任务中的有效性和效率，提出了一种简单的多输入注意组合机制&平均注意组合。
 
-#### 序列到序列模型
+## 序列到序列模型
 
 ![](H:\python-workspace\blog\yaolinxia.github.io\img\微信截图_20190115185038.png)
 
-### 数据
+# 数据
 
 - newspaper articles from the richmond (virginia) daily dispatch (rdd) from 1860–1865
 
@@ -151,7 +151,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   此外，通过对重复文本进行多输入解码，我们的噪声纠错模型达到了与监督模型相当的性能。
 
-#### 数据收集data collection
+## 数据收集data collection
 
 - 从两个来源中选择一个最好的OCR输出， 基于此之上，做实验。1）美国历史新闻——200万，2）公共领域300万存档
 
@@ -195,7 +195,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   因此，对于每一条目标OCR线-即训练或测试集中的每一行-除了地面-“真相手册”成绩单外，还有来自类似文本的零名或多名证人使用来自考证的术语。
 
-#### 训练和测试
+## 训练和测试
 
 - in our experiments on ocr correction, each training and test example is a line of text following the layout of the scanned image documents
 
@@ -227,7 +227,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 
 
-### 论文贡献
+# 论文贡献
 
 - a scalable framework needing no supervision from human annotations to train the correction model
 
@@ -247,13 +247,13 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 
 
-### 方法
+## 方法
 
 - 先训练一个OCR的错误矫正模型，通过基于attention机制的端到端的RNN编码解码，将单输入的OCR错误矫正模型作为输入，输出是经过矫正后的文本
 - 在解码阶段，多输入的attention联合策略，可以使得解码器能够从多输入中整合信息
 - 最后讨论了几种在矫正模型中的非监督的设置
 
-#### 问题
+## 问题
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2u61ksndj20h408xmzd.jpg)
 
@@ -265,7 +265,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 >
 > X = [X1, X2, ...XN].理解XN 为每一行
 
-#### 模型
+## 模型
 
 - 基于注意力的端到端模型
 
@@ -280,7 +280,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
   ![](https://ws1.sinaimg.cn/large/e93305edgy1fy2vawfoy9j20d00enwh7.jpg)
 
 
-#### 多输入Attention
+### 多输入Attention
 
 ![](https://ws1.sinaimg.cn/large/e93305edgy1fy319q9mvrj20gv0cqdhy.jpg)
 
@@ -289,7 +289,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 - 可以生成隐藏层的序列hl, 在解码搜寻时， 通过编码阶段的隐藏状态H, 计算全局的上下文向量ct     
 - 采用了不同的联合attention机制
 
-##### Flat Attention Combination
+#### Flat Attention Combination
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/20190122174437.png)
 
@@ -297,17 +297,17 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   平面注意力组合类似于单输入解码，因为它将所有输入串联成一个长序列，除了对每个输入独立计算编码器隐藏状态之外。
 
-##### **Hierarchical Attention Combination**
+#### **Hierarchical Attention Combination**
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/20190122175001.png)
 
 3
 
-#### 几种非监督方法(训练设置)
+## 几种非监督方法(训练设置)
 
-训练矫正模型
+训练矫正模型，介绍基于attention机制的单输入端到端的模型， 通过不同的机制
 
-##### 有监督
+### 有监督
 
 - seq2seq-super
 
@@ -315,33 +315,75 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - 将每一个OCR的对应的行，与人工标注的抄本进行一一对应（人工标注）
 
-##### 无监督
+### 无监督
 
 - in the absence of ground truth transcriptions, we can use different methods to generate a noisy corrected version for each ocr’d line
 
   在没有地面真实转录的情况下，我们可以使用不同的方法为每条OCR的文本线生成一个有噪声的校正版本
 
-- 噪声训练
+#### 噪声训练
 
-- 综合训练
+- correction model 被训练用来改变OCR的文本行到一个可选的高质量目击
 
-- synthetic training with bootstrapping.
+- 目击证据的质量通过构建在New York Time 上的语料库的5元字符语言模型衡量。
 
-  用鞋带进行综合训练。
+- 对于每一个OCR的行都有多个结果， 对于每一个目击，都会有一个得分的计算，除以整个字符的长度，来减少目击长度对其的影响。
 
-### 实验
+- 然后有高的得分的目击会被选中
+
+- then a witness with the highest score is chosen as the noisy ground truth for each line
+
+  然后，选择得分最高的证人作为每一行嘈杂的地面真相。
+
+- 低得分的行，就会被去除
+
+#### 综合训练
+
+- in this setting, the error correction model is trained to recover a manually corrupted out-of-domain corpus. we construct the synthetic dataset by injecting uniformly distributed insertion, deletion and substitution errors into the new york times corpus.
+
+  在此设置下，对错误修正模型进行训练，以恢复手动损坏的领域外的语料库.我们通过将均匀分布的插入、删除和替换错误注入纽约时报语料库来构造合成数据集。
+
+- we construct the synthetic dataset by injecting uniformly distributed insertion, deletion and substitution errors into the new york times corpus.
+
+  我们通过将均匀分布的插入、删除和替换错误注入纽约时报语料库来构造合成数据集。
+
+- 通过高斯分布，将新闻文章纷争随机长度在[1. 70]的行， 这样的话，与真实世界的数据相接近。
+
+- 然后，特定的数据行被随机选中， 并且加入到相同数目的插入，删除，替换错误。
+
+- 整个错误模型然后会被训练，以从每一个错误的行中，恢复原始的行，叫这个模型为Seq2Seq-Syn
+
+#### synthetic training with bootstrapping.
+
+- 通过Bootstrapping 进一步改进综合训练的效果
+
+- 矫正模型，由于其在错误分布上的不同，其在综合训练集上表现不是很好
+
+- but it achieves comparable performance with the supervised model when decoding lines with multiple witnesses, since the model could further benefit from jointly aligning and voting among multiple inputs.
+
+  但是，在对多个目击者解码线路时，该模型的性能与监督模型相当，因为该模型可以从多个输入之间的联合对齐和投票中进一步受益。
+
+- thus, with the multi-input attention mechanism introduced in 3.3, we first generate a high-quality consensus correction for each ocr’d line with witnesses via the correction model trained on synthetic data.
+
+  因此，使用3.3节中引入的多输入注意机制，我们首先通过对综合数据进行训练的校正模型，为每个OCR与目击者进行高质量的一致性校正。
+
+- then, the a bootstrapped model is trained to transform those lines into their consensus correction results. we call the correction model trained in this setting seq2seq-bootstrap.
+
+  然后，对一个自举模型进行训练，将这些线转化为它们的一致性校正结果。我们称在这个设置中训练的校正模型为seq2seq-bootstrap。
+
+# 实验
 
 - 分别在监督和非监督训练集上训练
 
 - we experiment with both supervised and unsupervised training and with single- and multi-input decoding on data from two manually transcribed collections in english with diverse typefaces, genres, and time periods:
 
-  我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段：
+  我们试验有监督的和无监督的培训，并对两个人工转录的英语集合中的数据进行单输入和多输入解码，这些数据具有不同的字体、类型和时间段
 
 - for both collections, which were manually transcribed by other researchers and are in the public  domain, we aligned the one-best output of an ocr system to the manual transcripts.
 
   对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。
 
-#### 初步实验
+## 初步实验
 
 - 单输入模型
 
@@ -362,11 +404,11 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
   flat attention 
 
 
-#### 训练细节
+## 训练细节
 
 - 随机把OCR分成了80%的训练，20%的测试
 
-#### 对比试验
+## 对比试验
 
 最开始的实验，比较翻译模型，
 
@@ -394,7 +436,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   不幸的是，即使在数千次迭代之后，它们的实现结果也没有在我们数据中的大多数行上返回完成证书。
 
-### 评估
+# 评估
 
 - word error rate (WER)
 - character error rate (CER)
@@ -411,7 +453,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   计算每种错误率的宏平均值，这允许我们使用配对排列显着性检验。
 
-### 结论
+# 结论
 
 - all results are on the same test set. the multi-input decoding experiments have access to additional witnesses for each line, where available, but fall back to single-input decoding when no additional witnesses are present for a given line.
 
@@ -429,24 +471,24 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - 我们提出的非监督框架，包括Seq2Seq-Noisy和Seq2Seq-Boots比多输入的监督学习方法，效果要好很多
 
-### 启发
+# 启发
 
 - 类似集成学习的方法，利用不同的预测结果，进行一个互补操作
 - 已有的训练结果cnn, tasseract, gru，可以先用这三个，来进行一个整合， 进行相互互补
 
 
 
-### 疑问
+# 疑问
 
 - witnesses这边指的是什么？
 
 - 它所用的对齐方法是怎么实现的？重复指的是什么？
 
-### Attention机制
+# Attention机制
 
 - 详细见博客<https://yaolinxia.github.io/2019/01/attention/>
 
-### 参考文献
+# 参考文献
 
 
 
