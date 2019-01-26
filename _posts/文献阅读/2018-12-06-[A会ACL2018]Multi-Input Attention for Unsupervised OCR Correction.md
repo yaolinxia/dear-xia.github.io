@@ -9,8 +9,6 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 
 
-
-
 # 问题备注
 
 - 无监督的OCR矫正
