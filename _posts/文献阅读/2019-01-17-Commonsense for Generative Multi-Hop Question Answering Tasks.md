@@ -65,6 +65,8 @@ tag: 文献阅读
 
 ![](./images/_20190117180331.png)
 
+
+
 ### baseline
 
 - 严格定义了QA问题
@@ -150,6 +152,10 @@ tag: 文献阅读
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/QQ图片20190123153337.png)
 
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/QQ图片20190128100714.png)
+
+
+
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190123160601.png)
 
 ## Commonsense Selection and Representation
@@ -219,6 +225,10 @@ tag: 文献阅读
 
 - 为了提供最有用的常识
 
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/QQ图片20190128100808.jpg)
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/QQ图片20190128100812.png)
+
 
 
 
@@ -227,7 +237,9 @@ tag: 文献阅读
 
 # 可待挖掘的亮点
 
-论文的一个亮点，是使用常识信息进行推理，针对的问题是阅读理解中的问答，也即给定一个问题， 要给出相应的答案，并且文中的数据都是英文的；
-
-如果是针对法律领域的应用场景，如果是针对问答的题目，设定一个法律文书的Context，或者多个Context，利用论文中的多跳推理， 结合创建出的法律文书的知识图谱，结合使用；
+1. 论文的一个亮点，是使用常识信息进行推理，针对的问题是阅读理解中的问答，也即给定一个问题， 要给出相应的答案；
+2. 提出来一套常识的选择和表示机制，可以借鉴；
+3. 论文中的数据是英文的，而如果我们是针对法律领域的数据的，可以进一步利用词性，句法语义分析；
+4. 如果是针对法律领域的应用场景，如果是针对问答的题目，设定一个法律文书的Context，或者多个Context，利用论文中的多跳推理， 结合创建出的法律文书的知识图谱，结合使用，给出最后的答案；
+5. 论文中使用的模型是RNN+attention+Pointer，模型的地方也可以进一步进行改进，换个模型？比如RNN的模型换成GRU或者其他，attention这边采用其他attention。
 
