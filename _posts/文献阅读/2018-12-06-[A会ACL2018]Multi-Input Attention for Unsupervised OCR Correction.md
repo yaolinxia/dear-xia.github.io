@@ -286,7 +286,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - 已经训练出了模型p(y|x)
 - 目标：联合多输入的序列X, 生成目标序列y，为了在解码的时候，假设序列X=[X1, X2, ..., XN]被观察到，其中每一个序列Xl = [xl,1.......Xl,tl], Tl指长度
-- 可以生成隐藏层的序列hl, 在解码搜寻时， 通过编码阶段的隐藏状态H, 计算全局的上下文向量ct     
+- 可以生成隐藏层的序列hl, 在解码搜寻时，通过编码阶段的隐藏状态H, 计算全局的上下文向量ct     
 - 采用了不同的联合attention机制
 
 #### Flat Attention Combination?
@@ -383,30 +383,32 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   对于这两个由其他研究人员手工转录并属于公共领域的集合，我们将OCR系统的一个最佳输出与手工记录进行了比对。?
 
-## 初步实验
 
-- 单输入模型
-
-  ![](H:\python-workspace\blog\yaolinxia.github.io\img\_20181221165131.png)
-
-- 多输入模型
-
-  ![](H:\python-workspace\blog\yaolinxia.github.io\img\20181221165456.png)
-
-
-
-
-
-  平均联合attention机制
-
-  等级attention机制展示了平均的证据
-
-  flat attention 
 
 
 ## 训练细节
 
 - 随机把OCR分成了80%的训练，20%的测试
+
+- RDD: 1.7M 训练行数；0.44M测试行数
+
+- TCP:  2.8M 行数，从不同的训练集中被随机采样出来； 1.6M的行数被用来进行测试
+
+- hidden units： 400
+
+- 使用3层GRU
+
+- Adam optimizer: 0.0003
+
+- minibatch size: 128
+
+- epoches: 40
+
+- 选择开发集上最难理解的模型
+
+- the decoder implements beam search with a beam width of 100
+
+  解码器实现束宽为100的波束搜索。
 
 ## 对比试验
 
@@ -435,6 +437,46 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 - their implementation, unfortunately, turned out not to return a certificate of completion on most lines in our data even after thousands of iterations.
 
   不幸的是，即使在数千次迭代之后，它们的实现结果也没有在我们数据中的大多数行上返回完成证书。
+
+
+
+## 初步实验
+
+### 单输入模型
+
+
+
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190128200456.png)
+
+- 比较了三个模型：None?, PCRF，ATTn(Attn-Seq2Seq)
+
+- we first compare the attention-based seq2seq (attn-seq2seq) model, with a traditional seq2seq model, pcrf, on single input correction task.
+
+  我们首先比较了基于注意的seq2seq(attn-seq2seq)模型和传统的seq2seq模型PCRF在单输入校正任务上的应用。
+
+- as the pcrf implementation of schnober et al. (2016) is highly memory and time consuming for training on long sequences, we compare it with attn-seq2seq model on a smaller dataset with 100k lines randomly sampled from rdd newspapers training set.
+
+  作为Schnober等人的PCRF实现。(2016)对于长序列的训练具有很高的记忆和时间消耗，我们在一个较小的数据集上将它与attn-seq2seq模型进行比较，并从RDD报纸训练集中随机抽取了100 k行。
+
+- 
+
+### 多输入模型
+
+
+
+![](H:\python-workspace\blog\yaolinxia.github.io\img\20181221165456.png)
+
+
+
+
+
+  平均联合attention机制
+
+  等级attention机制展示了平均的证据
+
+  flat attention 
+
+
 
 # 评估
 
