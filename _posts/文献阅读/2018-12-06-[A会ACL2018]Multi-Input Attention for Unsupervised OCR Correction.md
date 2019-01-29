@@ -458,23 +458,85 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   作为Schnober等人的PCRF实现。(2016)对于长序列的训练具有很高的记忆和时间消耗，我们在一个较小的数据集上将它与attn-seq2seq模型进行比较，并从RDD报纸训练集中随机抽取了100 k行。
 
-- 
+- 然后使用训练过后的矫正模型， 训练整个测试集
+
+- we can find that the attn-seq2seq neural translation model works significantly better than the pcrf when trained on a dataset of the same size.
+
+  我们可以发现，在相同大小的数据集上训练时，attn-seq2seq神经翻译模型的工作效率明显优于PCRF。
+
+- the performance of the attn-seq2seq model could be further improved by including more training data or by multi-input decoding for duplicated texts, while the pcrf could only be trained on limited data and is not able to work on multiple inputs.
+
+  通过包含更多的训练数据或对重复文本进行多输入解码，可以进一步提高attn-seq2seq模型的性能，而PCRF只能对有限的数据进行训练，不能在多个输入上工作。
 
 ### 多输入模型
 
+- 在多输入解码任务上，比较不同的attention机制的策略
 
+![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190129090219.png)
 
-![](H:\python-workspace\blog\yaolinxia.github.io\img\20181221165456.png)
+- 平均attention效果最好， 比weight机制要好
+- flat attention, 可以联合所有的输入进入一个长的序列中。
 
+### 主要结果
 
+- 结果是在全部的RDD和TCP的训练集和测试集上
 
+- 所有的结果都是在相同的测试集上
 
+- the multi-input decoding experiments have access to additional witnesses for each line, where available, but fall back to single-input decoding when no additional witnesses are present for a given line.
 
-  平均联合attention机制
+  在可用的情况下，多输入解码实验可以为每一行提供额外的目击者，但当给定线路没有额外的目击者时，则返回到单输入解码。
 
-  等级attention机制展示了平均的证据
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190129092103.png)
 
-  flat attention 
+- 表五，展示了我们模型在不同训练集上的结果，包括LMR，majority vote 方法
+- 对于每一个训练集来说，多输入解码比单输入解码表现地更好。并且在监督模式下训练好的模型获得了最好的效果。
+- majority vote，必须在多于两个的输入，在TCP和RDD中，展示的效果最差。
+- 我们提出的非监督的框架工作Seq2Seq-Noisy 和 Seq2Seq-Boots， 比有监督的效果要好。
+- Long  s :长小号字的存在
+- 之所以Seq2Seq-Noisy的效果在TCP上比RDD新闻上更坏，是因为这些古书，包含了字符long s
+- 将这种干扰去除 把long s 换成了f, 错误率达到0.062对于单输入的解码和都输入解码
+
+- 我们猜测在新闻上年的数据更加综合，更加接近于19世纪的RDD新闻
+
+- the long s problem also makes it more difficult for the model trained on synthetic data to work on the tcp books
+
+  Long的问题也使得对合成数据进行训练的模型更难以在tcp书籍上工作。
+
+### 讨论
+
+我们的方法的不同方面，提供了进一步的分析
+
+#### Does Corruption Rate Affect Synthetic Training?
+
+- we first examine how the corruption rate of the synthetic dataset would affect the performance of the correction model.
+
+  我们首先考察了综合数据集的腐败率如何影响校正模型的性能。
+
+- figure 2 presents the results of single-input correction and multi-input correction tasks on the rdd newspapers and tcp books when trained on synthetic data corrupted with different error rate: 0.9, 0.12, 0.15.
+
+  图2显示了在RDD报纸和TCP书籍上对不同错误率(0.9、0.12、0.15)损坏的合成数据进行训练时单输入校正和多输入校正任务的结果。
+
+#### Does Number of Witnesses Matter for Multiple-Input Decoding?
+
+- 探究witness的数量对多输入编码的效果影响
+- 测试集被分成了可变大小的subgroups，根据他们的witness的数量
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190129110353.png)
+
+- RDD上，有监督的方法，效果更好
+
+- TCP上，在0-2之间比较平缓。the character error rate for both seq2seq-syn and seq2seq-boots decreases with small fluctuation when the number of witnesses increases.当目击证人数量增加时，seq2seq-syn和seq2seq-boot的字符错误率都会随着较小的波动而减小。
+
+- seq2seq-noisy performs the worst almost on all subgroups on the tcp books since all the witnesses suffers from the long s problem.
+
+  seq2seq-噪音几乎在tcp书籍上的所有子组中表现最差，因为所有的目击者都受到了长期问题的困扰。
+
+#### Can More Training Data Benefit Learning
+
+- 更多的数据集会有对于模型学习有帮助吗
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190129111420.png)
 
 
 
@@ -523,12 +585,27 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 # 疑问
 
 - witnesses这边指的是什么？
-
 - 它所用的对齐方法是怎么实现的？重复指的是什么？
+- Corruption Rate指的是什么？
 
 # Attention机制
 
 - 详细见博客<https://yaolinxia.github.io/2019/01/attention/>
+
+# 语言模型
+
+- **用来计算一个句子的概率的模型，也就是判断一句话是否是人话的概率**
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/papers/commonsense/微信截图_20190129134936.png)
+
+- **参考网址：**<https://zhuanlan.zhihu.com/p/28080127>
+
+# Majority vote？
+
+- 线性时间或者常量空间中，找寻序列元素的主体。
+
+
+
 
 # 参考文献
 
