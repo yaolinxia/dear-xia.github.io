@@ -7,10 +7,6 @@ tag: 文献阅读
 [David Smith](https://dblp.uni-trier.de/pers/hd/s/Smith:David), [Rui Dong](https://dblp.uni-trier.de/pers/hd/d/Dong:Rui):
 Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://dblp.uni-trier.de/db/conf/acl/acl2018-1.html#SmithD18): 2363-2372
 
-
-
-
-
 # 问题备注
 
 - 无监督的OCR矫正
