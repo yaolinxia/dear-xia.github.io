@@ -15,13 +15,13 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - we propose a novel approach to ocr post-correction that exploits repeated texts in large corpora both as a source of noisy target outputs for unsupervised training and as a source of evidence when decoding.
 
-  我们提出了一种新的OCR后校正方法，该方法利用大语料库中的重复文本作为无监督训练的噪声目标输出源和解码时的证据来源。
+  我们提出了一种新的OCR后校正方法，该方法**利用大语料库中的重复文本作为无监督训练的噪声目标输出源和解码时的证据来源**。
 
 - a sequence-to-sequence model with attention is applied for single-input correction, and a new decoder with multi-input attention averaging is developed to search for consensus among multiple sequences.
 
   提出了一种基于注意的序列到序列模型进行单输入校正，并设计了一种新的多输入注意平均译码器，以寻找多序列间的一致性。
 
-- we design two ways of training the correction model without human annotation, either training to match noisily observed textual variants or bootstrapping from a uniform error model.
+- we design two ways of training the correction model without human annotation, either **training to match noisily observed textual variants** or **bootstrapping from a uniform error model**.
 
   设计了两种无需人工标注的校正模型训练方法，一种是训练来匹配噪声观测到的文本变体，另一种是从统一的错误模型中进行引导。？
 
@@ -39,11 +39,11 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
 - the scale of these projects not only makes it dif- ficult to adapt ocr models to their diverse layouts and typefaces but also makes it impractical to present any ocr output other than a single-best transcript
 
-  这些项目的规模不仅使得使ocr模型适应其多样化的布局和字体变得不现实，而且除了一份最好的成绩单之外，还使任何ocr的输出都变得不切实际。
+  这些项目的规模不仅使得ocr模型适应其多样化的布局和字体变得不现实，而且除了一份最好的成绩单之外，还使任何ocr的输出都变得不切实际
 
 # 目前解决方法
 
-- existing methods for automatic ocr postcorrection are mostly supervised methods that correct recognition errors in a single ocr output
+- existing methods for automatic ocr postcorrection are mostly supervised methods that correct recognition errors in a single ocr output
 
   现有的自动OCR后校正方法大多是对单个OCR输出中的识别错误进行修正的监督方法。
 
