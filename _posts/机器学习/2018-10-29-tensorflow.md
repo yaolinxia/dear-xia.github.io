@@ -828,6 +828,35 @@ t_list[i] 的更新公式如下:
 global_norm 是所有梯度的平方和，如果 clip_norm > global_norm ，就不进行截取。 
 但是这个函数的速度比clip_by_norm() 要慢，因为在截取之前所有的参数都要准备好。其他实现的函数还有这些
 
+### **2.20 tf.pad**
+
+**作用：填充**
+
+~~~python
+pad(
+    tensor,
+    paddings,
+    mode='CONSTANT',
+    name=None
+)
+~~~
+
+tensor是要填充的张量
+padings 也是一个张量，代表每一维填充多少行/列，但是有一个要求它的rank一定要和tensor的rank是一样的
+
+mode 可以取三个值，分别是"CONSTANT" ,"REFLECT","SYMMETRIC"
+
+mode="CONSTANT" 是填充0
+
+mode="REFLECT"是映射填充，上下（1维）填充顺序和paddings是相反的，左右（零维）顺序补齐
+
+mode="SYMMETRIC"是对称填充，上下（1维）填充顺序是和paddings相同的，左右（零维）对称补齐
+--------------------- 
+作者：zhang_bei_qing 
+来源：CSDN 
+原文：https://blog.csdn.net/zhang_bei_qing/article/details/75090203 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
 ## 三、模型的训练
 
 ### 3.1 定义指标
