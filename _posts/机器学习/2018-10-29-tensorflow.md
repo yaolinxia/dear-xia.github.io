@@ -813,7 +813,20 @@ print(d)
    [0]]]]
 ~~~
 
+### 2.19 tf.clip_by_global_norm
 
+>  tf.clip_by_global_norm(t_list, clip_norm, use_norm=None, name=None) 
+
+通过权重梯度的总和的比率来截取多个张量的值。 
+t_list 是梯度张量， clip_norm 是截取的比率, 这个函数返回截取过的梯度张量和一个所有张量的全局范数。
+
+t_list[i] 的更新公式如下:
+
+>t_list[i] * clip_norm / max(global_norm, clip_norm)
+
+其中global_norm = sqrt(sum([l2norm(t)**2 for t in t_list])) 
+global_norm 是所有梯度的平方和，如果 clip_norm > global_norm ，就不进行截取。 
+但是这个函数的速度比clip_by_norm() 要慢，因为在截取之前所有的参数都要准备好。其他实现的函数还有这些
 
 ## 三、模型的训练
 
