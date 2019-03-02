@@ -129,7 +129,7 @@ for i in range(1000):
   train_step.run(feed_dict={x: batch[0], y_: batch[1]})
 ~~~
 
-每一步迭代，我们都会加载50个训练样本，然后执行一次`train_step`，并通过`feed_dict`将`x` 和 `y_`张量`占位符`用训练训练数据替代。
+每一步迭代，我们都会加载50个训练样本，然后执行一次`train_step`，并通过`feed_dict`将`x` 和 `y_`张量`占位符`用训训练数据替代。
 
 注意，在计算图中，你可以用`feed_dict`来替代任何张量，并不仅限于替换`占位符`。
 
@@ -813,6 +813,41 @@ print(d)
    [0]]]]
 ~~~
 
+**解释：**这个函数的作用是对`tensor`的维度进行重新组合。给定一个`tensor`，这个函数会返回数据维度是`shape`的一个新的`tensor`，但是`tensor`里面的元素不变。
+如果`shape`是一个特殊值`[-1]`，那么`tensor`将会变成一个扁平的一维`tensor`。
+如果`shape`是一个一维或者更高的`tensor`，那么输入的`tensor`将按照这个`shape`进行重新组合，但是重新组合的`tensor`和原来的`tensor`的元素是必须相同的。
+
+使用例子：
+
+```
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import tensorflow as tf 
+import numpy as np 
+
+sess = tf.Session()
+data = tf.constant([[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]]])
+print sess.run(data)
+print sess.run(tf.shape(data))
+d = tf.reshape(data, [-1])
+print sess.run(d)
+d = tf.reshape(data, [3, 4])
+print sess.run(d)
+```
+
+输入参数：
+
+- `tensor`: 一个`Tensor`。
+- `shape`: 一个`Tensor`，数据类型是`int32`，定义输出数据的维度。
+- `name`:（可选）为这个操作取一个名字。
+
+输出参数：
+
+- 一个`Tensor`，数据类型和输入数据相同。
+
+
+
 ### 2.19 tf.clip_by_global_norm
 
 >  tf.clip_by_global_norm(t_list, clip_norm, use_norm=None, name=None) 
@@ -851,11 +886,34 @@ mode="CONSTANT" 是填充0
 mode="REFLECT"是映射填充，上下（1维）填充顺序和paddings是相反的，左右（零维）顺序补齐
 
 mode="SYMMETRIC"是对称填充，上下（1维）填充顺序是和paddings相同的，左右（零维）对称补齐
---------------------- 
-作者：zhang_bei_qing 
-来源：CSDN 
-原文：https://blog.csdn.net/zhang_bei_qing/article/details/75090203 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+
+### **2.21 tf.concat**
+
+~~~
+tf.concat(
+    values,
+    axis,
+    name='concat'
+)
+~~~
+
+- values应该是一个tensor的list或者tuple。
+- axis则是我们想要连接的维度。
+- tf.concat返回的是连接后的tensor。
+
+### **2.22 tf.cast**
+
+~~~
+tf.cast(
+    x,
+    dtype,
+    name=None
+)
+~~~
+
+tf.cast可以改变tensor的数据类型
+
+
 
 ## 三、模型的训练
 
