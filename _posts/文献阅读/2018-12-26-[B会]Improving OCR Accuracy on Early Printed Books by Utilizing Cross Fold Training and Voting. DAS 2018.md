@@ -4,8 +4,8 @@ title: "[B会]Improving OCR Accuracy on Early Printed Books by Utilizing Cross F
 tag: 文献阅读
 ---
 
-[Yang He](https://dblp.uni-trier.de/pers/hd/h/He_0003:Yang), [Jingling Yuan](https://dblp.uni-trier.de/pers/hd/y/Yuan:Jingling), [Lin Li](https://dblp.uni-trier.de/pers/hd/l/Li:Lin):
-Enhancing RNN Based OCR by Transductive Transfer Learning From Text to Images. [AAAI 2018](https://dblp.uni-trier.de/db/conf/aaai/aaai2018.html#HeYL18): 8083-8084
+[Christian Reul](https://dblp.uni-trier.de/pers/hd/r/Reul:Christian), [Uwe Springmann](https://dblp.uni-trier.de/pers/hd/s/Springmann:Uwe), [Christoph Wick](https://dblp.uni-trier.de/pers/hd/w/Wick:Christoph), [Frank Puppe](https://dblp.uni-trier.de/pers/hd/p/Puppe:Frank):
+Improving OCR Accuracy on Early Printed Books by Utilizing Cross Fold Training and Voting. [DAS 2018](https://dblp.uni-trier.de/db/conf/das/das2018.html#ReulSWP18): 423-428
 
 ### 问题备注，摘要
 
@@ -16,7 +16,9 @@ Enhancing RNN Based OCR by Transductive Transfer Learning From Text to Images. [
 
 ### 方法
 
+- our method shows considerable differences compared to the work presented above. not only is it applicable to some of the earliest printed books, but it also works with only a single open source ocr engine. furthermore, it can be easily adapted to practically any given book using even a small amount of gt without the need for excessive data to train on (60 to 150 lines of gt corresponding to just a few pages will suffice for most cases)
 
+  与上述工作相比，我们的方法显示出相当大的差异。它不仅适用于一些最早的印刷书籍，而且只适用于单一的开源引擎。此外，它可以很容易地适应几乎任何特定的书籍，即使使用少量的GT，而不需要对过多的数据进行培训(相当于几页的60到150行GT就足以满足大多数情况)。
 
 
 
@@ -29,6 +31,10 @@ Enhancing RNN Based OCR by Transductive Transfer Learning From Text to Images. [
 
 
 ### 实验
+
+#### **数据**
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/微信截图_20190305161244.png)
 
 
 

@@ -72,7 +72,6 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 >
 > 它因此导致了不稳定的错误模式
 >
->
 
 - ongoing effort on large-scale digitization has made a massive amount of printed information available to search, access, and analyze. besides some well-known internet archives, such as google books,1 biodiversity heritage library,2 and project gutenberg,3 digitization has been actively organized by public institutions covering a wide range of documentation including historical archives, medical reposts, and government document repositories.
 
@@ -220,7 +219,7 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 #### 错误分类
 
-- 给定一个标记好的文本，分类器必须能够分类出OCR错误的情况，考虑到错误的单词都不会在错误的句子中进行处理，所以，最初该分类器的目标是降低
+- 给定一个标记好的文本，分类器必须能够分类出OCR错误的情况，考虑到错误的单词都不会在错误的句子中进行处理，所以，最初该分类器的目标是降低错误
 
 #### 候选集选择
 
@@ -319,7 +318,9 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 ### 启发
 
-
+- 丰富发语料库
+- 矫正管道
+- 边界模糊的标记化方法
 
 
 

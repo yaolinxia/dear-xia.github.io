@@ -317,7 +317,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   在没有地面真实转录的情况下，我们可以使用不同的方法为每条OCR的文本线生成一个有噪声的校正版本
 
-#### 噪声训练?
+#### 噪声训练?Seq2Seq-Noisy
 
 - correction model 被训练用来改变OCR的文本行到一个可选的高质量目击
 
