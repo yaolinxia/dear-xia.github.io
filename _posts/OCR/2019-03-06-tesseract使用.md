@@ -58,9 +58,36 @@ root@gemfield:# tesseract test4.png stdout -l chi_sim
 
 # **ubuntu 安装中文输入法**
 
+~~~
+sudo apt-get install ibus-pinyin
+~~~
+
+- 要先安装拼音
+
 - <https://blog.csdn.net/zhangchao19890805/article/details/52743380>
 
+~~~
+打开/etc/environment
+在下面添加如下两行
+LANG=”zh_CN.UTF-8″
+LANGUAGE=”zh_CN:zh:en_US:en”
 
+打开 /var/lib/locales/supported.d/local
+添加zh_CN.GB2312字符集，如下：
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+zh_CN.GBK GBK
+zh_CN GB2312
+保存后，执行命令：
+sudo locale-gen
+
+打开/etc/default/locale
+修改为：
+LANG=”zh_CN.UTF-8″
+LANGUAGE=”zh_CN:zh:en_US:en”
+~~~
+
+- 上述方法，试了一下，行不通
 
 # **参考网址**
 
