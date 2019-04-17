@@ -1046,7 +1046,7 @@ for i in range(1000):
 
 ### 5.2 卷积和池化
 
-- 的卷积使用1步长（stride size），0边距（padding size）的模板，保证输出和输入是同一个大小。我们的池化用简单传统的2x2大小的模板做max pooling。为了代码更简洁，我们把这部分抽象成一个函数。
+- 卷积使用1步长（stride size），0边距（padding size）的模板，保证输出和输入是同一个大小。我们的池化用简单传统的2x2大小的模板做max pooling。为了代码更简洁，我们把这部分抽象成一个函数。
 
   ~~~python
   def conv2d(x, W):
@@ -1090,7 +1090,6 @@ for i in range(1000):
   ~~~python
   W_conv2 = weight_variable([5, 5, 32, 64])
   b_conv2 = bias_variable([64])
-  
   h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
   h_pool2 = max_pool_2x2(h_conv2)
   ~~~

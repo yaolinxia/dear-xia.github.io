@@ -43,11 +43,21 @@ tag: 机器学习
 ~~~
 # 定义存放目录的位置
 writer = tf,summary.FileWriter("tb“)
-
-
 ~~~
 
 
 
+## **四、Docker中使用tensorboard**
 
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/2019-04-17 22-01-28屏幕截图.png)
+
+**需要完成Docker到宿主机的映射**
+
+**参考网址：**
+
+- <https://www.cnblogs.com/dyufei/p/8094507.html>
+
+- <http://data4q.com/2017/07/22/%E8%AE%BF%E9%97%AEdocker%E5%AE%B9%E5%99%A8%E4%B8%ADtensorboard/>
+- <https://blog.csdn.net/qq_20909377/article/details/79103113>
+- 
 
