@@ -56,8 +56,14 @@ writer = tf,summary.FileWriter("tb“)
 **参考网址：**
 
 - <https://www.cnblogs.com/dyufei/p/8094507.html>
-
 - <http://data4q.com/2017/07/22/%E8%AE%BF%E9%97%AEdocker%E5%AE%B9%E5%99%A8%E4%B8%ADtensorboard/>
 - <https://blog.csdn.net/qq_20909377/article/details/79103113>
-- 
+
+**该方法有问题**
+
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/2019-04-18 10-02-09屏幕截图.png)
+
+> 不需要再重新创建镜像
+
+
 
