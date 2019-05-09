@@ -17,7 +17,7 @@ Improving OCR Accuracy on Early Printed Books by Utilizing Cross Fold Training a
 
   最终得到的文本通常与原始文档中的文本不匹配。为了最大限度地减少所获得的文本中不正确的字数，可以使用更精确的后处理方法。当我们处理阿拉伯语时，纠正错误是比较复杂的，因为它的复杂性，例如连接字母，不同的字母可能有相同的形状，同一字母可能有不同的形式。
 
-- this paper provides a statistical arabic language model and post-processing techniques based on hybridizing the error model approach with the context approach
+- this paper provides a statistical arabic language model and post-processing techniques based on hybridizing the error model approach with the context approach.
 
   本文提出了一种基于误差模型与上下文方法杂交的统计阿拉伯语模型和后处理技术。
 
