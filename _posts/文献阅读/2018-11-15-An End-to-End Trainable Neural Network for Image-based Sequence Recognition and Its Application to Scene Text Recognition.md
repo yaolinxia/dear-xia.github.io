@@ -4,6 +4,8 @@ title: "An End-to-End Trainable Neural Network for Image-based Sequence Recognit
 tag: 文献阅读
 ---
 
+**An End-to-End Trainable Neural Network for Image-Based Sequence Recognition and Its Applicationto Scene Text Recognition.** [IEEE Trans. Pattern Anal. Mach. Intell. 39(11)](https://dblp.uni-trier.de/db/journals/pami/pami39.html#ShiBY17): 2298-2304 (2017)
+
 ### 问题备注
 
 基于图像的序列识别；

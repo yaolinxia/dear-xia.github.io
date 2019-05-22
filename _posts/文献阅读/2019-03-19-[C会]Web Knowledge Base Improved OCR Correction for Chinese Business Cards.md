@@ -83,12 +83,34 @@ Web Knowledge Base Improved OCR Correction for Chinese Business Cards. [WAIM 201
 
 - then, dtw and jaccard/levenshtein measure were performed.
 
-  然后进行DTW和Jaccard/levenshtein测量。
+  DTW和Jaccard/levenshtein方法被提出来。
 
 - since different part within company name played different roles in comparison, part of speech tagging was applied for segmentation and feasible weights were then assigned using inverse document frequency(idf) derived from wikipedia kb.
 
-  由于公司名称中的不同部分所起的作用不同，因此采用语音标记进行分割，然后利用维基百科kb中的反向文档频率(下手频率)分配可行的权重。
+  j经对比之后发现，公司名称中的不同部分扮演着不同的角色，词性标注的方法被采用，然后利用维基百科kb中的反向文档频率(下手频率)分配可行的权重。
 
 - the details of weight computing is illustrated in formula.1. an example was shown in table.1.
 
   重量计算的细节在公式A.1中说明。表1中显示了一个例子。
+
+- text-level/image-level correction and pipelined framework
+
+  文本级/图像级校正和流水线框架
+
+- although the incorrectly recognized characters are different from the correct ones in text, they might be similar in image.
+
+  虽然不正确识别的字符与文本中的正确字符不同，但它们在图像上可能是相似的。
+
+- hence, a pipelined correction method using both text similarity and image similarity was applied.
+
+  因此，本文提出了一种基于文本相似度和图像相似度的流水线校正方法。
+
+- for text-level comparison, dtw combined with jaccard/levenshtein measure was applied.
+
+  文本级比较采用DTW与Jaccard/levenshtein相结合的方法。
+
+- for image-level comparison, 2d discrete cosine transform features and intersecting features were applied.
+
+  图像级比较采用二维离散余弦变换特征和相交特征。
+
+- 
