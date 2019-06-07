@@ -56,7 +56,8 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 - 为了处理含噪OCR文本中的歧义词边界，提出了一种两阶段标记化方案，该方案首先利用词汇表进行模糊边界检测，然后采用Peen树库约定对标记进行规范化。
 
-- 
+  
+
 
 ### Introduction
 
@@ -177,6 +178,8 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 
 
 
+
+
 ### 所用模型
 
 - 传统的错误纠正流程，包括三个语句部分：1，来自文本中的错误检测；2，检测误差的候选矫正生成；3，候选排名
@@ -230,6 +233,8 @@ Statistical learning for OCR error correction. [Inf. Process. Manage. 54(6)](htt
 - 呈现了每一个候选的集合，总结了6种特征类型
 
 ![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/微信截图_20190224174325.png)
+
+
 
 
 
