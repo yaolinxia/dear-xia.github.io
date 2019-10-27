@@ -60,7 +60,7 @@ tag: 机器学习
 
 - 在encoder-decoder基础上，引入AM模型
 - 给定一个概率分布值`（Tom,0.3）(Chase,0.2) (Jerry,0.5)`
-- 每个单词的概率代表了在当前单词下，注意力分配给不同英文单词的注意力大小。对于正确翻译目标单词是有帮助的，因为引入了新的信息。
+- 每个单词的概率代表了在当前单词下，注意力分配给不同英文单词的**注意力大小**。对于正确翻译目标单词是有帮助的，因为引入了新的信息。
 - 每个单词都应该学会其对应的源语句子中单词的注意力分配概率信息。
 - 这意味着在生成每个单词Yi的时候，原先都是相同的中间语义表示C会替换成根据当前生成单词而不断变化的Ci。
 
@@ -69,8 +69,6 @@ tag: 机器学习
 - 相应的生成目标句子单词的过程如下：
 
   ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190118172058.png)
-
-
 
 - 而每个Ci可能对应着不同的源语句子单词的注意力分配概率分布，比如对于上面的英汉翻译来说，其对应的信息可能如下：
 
@@ -194,7 +192,7 @@ tag: 机器学习
 
 - Self Attention不同，它分别在source端和target端进行，仅与source input或者target input自身相关的Self Attention，捕捉source端或target端自身的词与词之间的依赖关系；然后再把source端的得到的self Attention加入到target端得到的Attention中，捕捉source端和target端词与词之间的依赖关系。
 
-- self Attention Attention比传统的Attention mechanism效果要好，主要原因之一是，传统的Attention机制忽略了源端或目标端句子中词与词之间的依赖关系，相对比，self Attention可以不仅可以得到源端与目标端词与词之间的依赖关系，同时还可以有效获取源端或目标端自身词与词之间的依赖关系
+- self Attention比传统的Attention mechanism效果要好，主要原因之一是，传统的Attention机制忽略了源端或目标端句子中词与词之间的依赖关系，相对比，self Attention可以不仅可以得到源端与目标端词与词之间的依赖关系，同时还可以有效获取源端或目标端自身词与词之间的依赖关系
 
   ![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/微信截图_20190124164442.png)
 
