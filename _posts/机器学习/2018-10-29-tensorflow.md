@@ -39,6 +39,10 @@ TensorFlow中数据的中心单元是**张量**。 张量由一组原始值组�
 
 ### 1.3 计算图
 
+TensorFlow **图**（也称为**计算图**或**数据流图**）是一种图数据结构。很多 TensorFlow 程序由单个图构成，但是 TensorFlow 程序可以选择创建多个图。图的节点是指令；图的边是张量。张量流经图，在每个节点由一个指令操控。一个指令的输出张量通常会变成后续指令的输入张量。TensorFlow 会实现**延迟执行模型**，意味着系统仅会根据相关节点的需求在需要时计算节点。
+
+张量可以作为**常量**或**变量**存储在图中。您可能已经猜到，常量存储的是值不会发生更改的张量，而变量存储的是值会发生更改的张量。不过，您可能没有猜到的是，常量和变量都只是图中的一种指令。常量是始终会返回同一张量值的指令。变量是会返回分配给它的任何张量的指令。
+
 排列成**节点**的一系列Tensorflow操作。
 
 每个**节点**将零个或多个张量作为输入，并生成张量作为输出。
@@ -913,6 +917,14 @@ tf.cast(
 
 tf.cast可以改变tensor的数据类型
 
+### 2.23 tf.add
+
+~~~python
+x = tf.constant(8, name="x_const")
+y = tf.constant(5, name="y_const")
+sum = tf.add(x, y, name="x_y_sum")
+~~~
+
 
 
 ## 三、模型的训练
@@ -1150,7 +1162,109 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
     x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
 ~~~
 
-##六
+##六、简单案例
+
+### **6.1 两个常数相加**
+
+~~~python
+import tensorflow as tf
+g = tf.Graph()
+with g.as_default():
+  x = tf.constant(8, name="x_const")
+  y = tf.constant(5, name="y_const")
+  sum = tf.add(x, y, name="x_y_sum")
+  
+  # Task 1: Define a third scalar integer constant z.
+  z = tf.constant(4, name="z_const")
+  # Task 2: Add z to `sum` to yield a new sum.
+  new_sum = tf.add(sum, z, name="x_y_z_sum")
+
+  # Now create a session.
+  # The session will run the default graph.
+  with tf.Session() as sess:
+    # Task 3: Ensure the program yields the correct grand total.
+    print(new_sum.eval())
+~~~
+
+### 6.2 定义变量
+
+~~~python
+# 变量定义
+def var_test():
+  state = tf.Variable(0, name="counter")
+  input1 = tf.constant(3.0)
+  input1 = tf.placeholder(tf.float32)
+  input2 = tf.placeholder(tf.float32)
+  output = tf.matmul(input1, input2)
+  with tf.Session() as sess:
+    print(sess.run([output], feed_dict={input1: [7.], input2: [2.]}))
+
+if __name__ == '__main__':
+    # graph()
+  var_test()
+~~~
+
+**出现问题**
+
+~~~python
+WARNING:tensorflow:From /Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+2019-11-03 10:13:33.757337: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2019-11-03 10:13:33.757636: I tensorflow/core/common_runtime/process_util.cc:71] Creating new thread pool with default inter op setting: 8. Tune using inter_op_parallelism_threads for best performance.
+Traceback (most recent call last):
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1334, in _do_call
+    return fn(*args)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1319, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1407, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: lhs and rhs ndims must be >= 2: 1
+	 [[{{node MatMul}}]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/stone/PycharmProjects/ocr_Correction/test/test.py", line 28, in <module>
+    var_test()
+  File "/Users/stone/PycharmProjects/ocr_Correction/test/test.py", line 24, in var_test
+    print(sess.run([output], feed_dict={input1: [7.], input2: [2.]}))
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 929, in run
+    run_metadata_ptr)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1152, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1328, in _do_run
+    run_metadata)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1348, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: lhs and rhs ndims must be >= 2: 1
+	 [[node MatMul (defined at /Users/stone/PycharmProjects/ocr_Correction/test/test.py:22) ]]
+
+Caused by op 'MatMul', defined at:
+  File "/Users/stone/PycharmProjects/ocr_Correction/test/test.py", line 28, in <module>
+    var_test()
+  File "/Users/stone/PycharmProjects/ocr_Correction/test/test.py", line 22, in var_test
+    output = tf.matmul(input1, input2)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/ops/math_ops.py", line 2417, in matmul
+    a, b, adj_x=adjoint_a, adj_y=adjoint_b, name=name)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/ops/gen_math_ops.py", line 1423, in batch_mat_mul
+    "BatchMatMul", x=x, y=y, adj_x=adj_x, adj_y=adj_y, name=name)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py", line 788, in _apply_op_helper
+    op_def=op_def)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 3300, in create_op
+    op_def=op_def)
+  File "/Users/stone/anaconda3/envs/tensorflow_36/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 1801, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+InvalidArgumentError (see above for traceback): lhs and rhs ndims must be >= 2: 1
+	 [[node MatMul (defined at /Users/stone/PycharmProjects/ocr_Correction/test/test.py:22) ]]
+~~~
+
+
+
+
 
 ## 参考网址
 

@@ -19,7 +19,7 @@ ssh root@192.168.68.38
 # **显示出所有的容器**
 
 ~~~
-docker container ls 
+docker container ls -a
 ~~~
 
 - tesseract4re 就是我们所要安装的容器
