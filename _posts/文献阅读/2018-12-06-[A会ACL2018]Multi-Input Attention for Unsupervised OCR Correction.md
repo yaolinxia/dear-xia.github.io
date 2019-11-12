@@ -79,7 +79,7 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   因此，具有不同错误的重复文本可以作为彼此互补的信息源。
 
-![](https://ws1.sinaimg.cn/large/e93305edgy1fxx51fm1a8j20fn045q3h.jpg)
+![](../yaolinxia.github.io/img/e93305edgy1fxx51fm1a8j20fn045q3h.jpg)
 
 - we propose to map each erroneous ocr’d text unit to either its high-quality duplication or a consensus correction among its duplications via bootstrapping from an uniform error model.？
 
