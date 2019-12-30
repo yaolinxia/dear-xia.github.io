@@ -125,13 +125,13 @@ tag: 机器学习
 
 > eg:（Tom,0.6）(Chase,0.2)  (Jerry,0.2）是如何得到的
 
-![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/20160120182108205.png)
+![](../yaolinxia.github.io/img/20160120182108205.png)
 
 如上图，非AM模型的Encoder-Decoder框架进行细化，Encoder采用RNN模型，Decoder也采用RNN模型，这是比较常见的一种模型配置
 
 **概率分布值通用计算**：
 
-![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/20160120182219236.png)
+![ ](../yaolinxia.github.io/img/20160120182219236.png)
 
 > 上图对应输入值为Tom时， 对应的输入句子的对齐概率。
 >

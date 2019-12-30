@@ -1,5 +1,5 @@
 ---
-layout: post
+，，layout: post
 title: "transformer"
 tag: 机器学习
 ---
@@ -35,3 +35,10 @@ Transformer由论文《Attention is All You Need》提出，现在是谷歌云TP
 ![image-20191030122805699](../yaolinxia.github.io/img/image-20191030122805699.png)
 
 解码器中也有编码器的自注意力（self-attention）层和前馈（feed-forward）层。除此之外，这两个层之间还有一个注意力层，用来关注输入句子的相关部分（和seq2seq模型的注意力作用相似）。
+
+
+
+# **参考网址**
+
+- <[https://nocater.github.io/2019/05/05/transformer%E8%AF%A6%E8%A7%A3/](https://nocater.github.io/2019/05/05/transformer详解/)>
+- 

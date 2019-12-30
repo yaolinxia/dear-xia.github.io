@@ -54,6 +54,8 @@ Jiang等，2008； Sun，2011年），等等。
 已（yi3）。在第二个错误的句子中，
 盒装拼写错误她（ta1）在语音上与其对应的正确单词他（ta1）相同。
 
+![image-20191118100619451](../yaolinxia.github.io/img/image-20191118100619451.png)
+
 # Automatic Data Generation
 
 Spelling errors in Chinese are mainly caused by the misuse of visually or phonologically similar characters (Chang, 1995; Liu et al., 2011; Yu and Li, 2014). Errors of visually similar characters (henceforth V-style errors) are due to the prominence of character pairs visually similar to each other. The reason is that, Chinese, as a hieroglyph language, consists of more than sixty thousand characters2 . They are constructed by a limited number of radicals and components3 . As for errors caused by the misuse of phonologically similar characters (henceforth P-style errors), we note that pronunciations of Chinese characters are usually defined by Pinyin, which consists of initials, finals, and tones4 . According to Yang et al. (2012), there are only 398 syllables for thousands of characters in modern Chinese. As a result, there are many Chinese characters sharing similar pronunciation, which further leads to the prominence of P-style errors. In the rest of this section, we describe how we generate these two types of errors in Section 2.1 and 2.2, respectively.
@@ -90,49 +92,33 @@ Inspired by the observation that optical character recognition (OCR) tools are l
 详细来说，我们使用Google Tesseract（Smith，
 2007年）作为OCR工具包，生成过程如图1所示。
 
+**OCR工具最有可能对于相似字识别错误，我们故意模糊正确汉字的一部分，然后使用OCR工具产生V-style类型的错误。**
+
 Given a sentence, as the first step, we randomly select 1 ∼ 2 character(s) from it as our target characters to be detected by Tesseract, denoted as Ctargets. Specifically, except for Chinese characters, other characters like punctuations and foreign alphabets are excluded and we also filter those Chinese characters of low frequency5 based on the statistics of the Chinese Wikipedia Corpus6 . Second, we transfer Ctargets from text to image with 100 × 100 pixels, namely, each generated image has a same size. Third, we randomly blur a region7 in the produced images using Gaussian blurring (Bradski, 2000), which aims at leading the OCR toolkit to make mistakes. Finally, we use Google Tesseract to recognize the blurred images. Once the recognized result does not match to the original one, a V-style error is generated, which is used to replace the original character in the sentence, resulting in a sentence with V-style spelling error(s). After the aforementioned steps, we obtain the spelling errors for each sentence with their correct references.
 
 给定一个句子，作为第一步，我们从中随机选择1到2个字符作为我们要被Tesseract检测的目标字符，称为Ctargets。具体而言，除了中文字符外，其他字符（如标点符号和外来字母）均被排除在外，并且我们还会根据中文维基百科语料库6的统计数据过滤那些低频的汉字5。其次，我们将Ctarget从文本传输到100×100像素的图像，即，每个生成的图像具有相同的大小。第三，我们使用高斯模糊（Bradski，2000）对生成的图像中的region7进行随机模糊处理，目的是引导OCR工具包犯错误。最后，我们使用Google Tesseract识别模糊的图像。一旦识别出的结果与原始结果不匹配，就会生成V型错误，该错误将用于替换句子中的原始字符，从而导致句子中出现V型拼写错误。经过上述步骤，我们获得了每个句子的拼写错误以及正确的参考。
 
+**具体生成步骤如下：**
+
+1. **对于给定的每个句子，随机挑选1～2个字符，作为tesseract所要检测的字符。特殊的是，其他字符，标点符号等排除在外。并使用维基百科数据过滤掉低频字符。**
+2. **大小统一，都变成100*100的像素**
+3. **使用高斯模糊，对生成的图像中的部分区块进行随机模糊**
+4. **最后再使用tesseract进行识别**
+
+如果识别的结果宇最终的标签不匹配，那么一个V-style的错误就产生了， 其可以用来替换句子中的原始字符。经过上述步骤，我们获得了每个句子的拼写错误以及正确的参考。
+
 The raw texts used for OCR-based method are mainly from newspaper articles, which are crawled from People’s Daily, an official newspaper website8 , of which articles are reported to undergo a strict edition process and assumed to be all correct. We divide these texts into sentences using clause-ending punctuations such as periods (。), question mark (？), and exclamation mark (！) (Chang et al., 1993). In total, we obtain 50, 000 sentences, each of which contains 8 to 85 characters, including punctuations. These sentences are then handled by the OCR-based method as we describe before, resulting in an annotated corpus containing about 40, 000 annotated sentences with 56, 857 spelling errors. Note that in our experiment, we find that the OCR toolkit can still correctly detect the characters in the produced images even we blur part of the images
 
-用于基于OCR的方法的原始文本
-主要来自报纸文章
-从官方报纸网站《人民日报》上爬取8
-，据报道其中所有文章均经过严格的编辑，并假定全部
-正确。 我们使用以下命令将这些文本分为句子
-子句结尾的标点，例如句点（。），
-问号（？）和感叹号（！）
-（Chang等，1993）。 总共我们得到50，000
-句子，每个句子包含8到85个字符，包括标点符号。 这些句子
-然后由基于OCR的方法处理
-之前描述，产生带注释的语料库
-包含大约40，000个带注释的句子
-56，857拼写错误。 请注意，在我们的实验中，我们发现OCR工具包仍可以正确检测生成的图像中的字符
-即使我们模糊了部分图像
+用于基于OCR的方法的原始文本主要来自报纸文章， 从官方报纸网站《人民日报》上爬取，据报道其中所有文章均经过严格的编辑，并假定全部正确。 我们使用以下命令将这些文本分为句子子句结尾的标点，例如句点（。），问号（？）和感叹号（！）（Chang等，1993）。 总共我们得到50，000句子，每个句子包含8到85个字符，包括标点符号。 这些句子然后由基于OCR的方法处理之前描述，产生带注释的语料库包含大约40，000个
+56，857拼写错误。 请注意，在我们的实验中，我们发现OCR工具包仍可以正确检测生成的图像中的字符即使我们模糊了部分图像。这也是为什么生成的注释语料要小于原始语料。使用D-ocr表示此数据集
+
+![image-20191118102118179](../yaolinxia.github.io/img/image-20191118102118179.png)
+
+### **Bad Cases and the Solution**
 
 Bad Cases and the Solution Although the OCRbased method work smoothly, there are still some cases worth further investigation. By analyzing the generated spelling errors by this method, we find that in terms of shape, there exist some incorrectly recognized characters by the OCR toolkit that greatly differ from their corresponding correct characters. For example, for the blurred image containing the character 领 (ling3), the Tesseract incorrectly recognizes it as 铈 (shi4), which is totally different from 领 (ling3) in shape. Therefore, these cases should be excluded because human are less likely to make such mistakes. In solving this problem, we propose a novel approach to judge whether two characters are visually similar by calculating the edit distance based on the strokes of Chinese characters. Similar to English words consisting of alphabets, a Chinese character can be split into different strokes9 . To this end, we obtain the strokes of Chinese character from the Online dictionary10. Empirically, given two Chinese characters, c1 and c2, we set 0.25∗(len(c1)+len(c2)) as the threshold, η, where len(c) denotes the number of strokes for the Chinese character c. If the edit distance of two characters is more than a threshold η, we consider them not to be similar in shape. To better clarify it, a bad case and a good case are shown in Figure 2.
 
-坏情况和解决方案尽管基于OCR的方法工作顺利，但仍有一些问题
-案件值得进一步调查。通过分析
-通过这种方法生成的拼写错误，我们
-发现在形状方面，OCR工具包存在一些错误识别的字符
-与相应的正确字符有很大不同。例如，对于模糊的图像
-包含字符领（ling3），Tesseract
-错误地将其识别为cer（shi4），其形状与领（ling3）完全不同。因此，
-这些情况应排除在外，因为人类是
-犯此类错误的可能性较小。在解决这个问题
-问题，我们提出了一种新颖的判断方法
-通过基于的笔划计算编辑距离，两个字符在视觉上是否相似
-中国文字。类似于由字母组成的英语单词，中文字符可以是
-分成不同的笔触9
-。为此，我们获得
-在线上的汉字笔画
-字典10。根据经验，给定两个汉字c1和c2，我们将0.25 *（len（c1）+ len（c2））设置为
-作为阈值η，其中len（c）表示汉字c的笔画数。如果
-两个字符的编辑距离大于
-阈值η，我们认为它们在
-形状。为了更好地说明这一点，一个坏案例和一个好案例
+坏情况和解决方案尽管基于OCR的方法工作顺利，但仍有一些问题案件值得进一步调查。通过分析这种方法生成的拼写错误，我们发现在形状方面，OCR工具包存在一些错误识别的字符与相应的正确字符有很大不同。例如，对于模糊的图像字符领（ling3），Tesseract错误地将其识别为铈（shi4），其形状与领（ling3）完全不同。因此，这些情况应排除在外，因为人类犯此类错误的可能性较小。在解决这个问题，我们提出了一种新颖的判断方法通过基于笔划计算编辑距离，两个字符在视觉上是否相似中国文字。类似于由字母组成的英语单词，中文字符可以是分成不同的笔画。为此，我们获得在线上的汉字笔画字典。根据经验，给定两个汉字c1和c2，我们将0.25 *（len（c1）+ len（c2））设置为阈值η，其中len（c）表示汉字c的笔画数。如果两个字符的编辑距离大于阈值η，我们认为它们在形状不是很相似。为了更好地说明这一点，一个坏案例和一个好案例
 情况如图2所示。
 
 ![image-20191109155147140](../yaolinxia.github.io/img/image-20191109155147140.png)
@@ -141,22 +127,13 @@ Bad Cases and the Solution Although the OCRbased method work smoothly, there are
 
 Similar to OCR tools, automatic speech recognition (ASR) tools may also mistake characters for others with similar pronunciations (Hartley and Reich, 2005). To build an annotated corpus of P-style errors, we follow the similar inspiration with those for V-style errors and OCR tools, and adopted a pipeline as shown in Figure 3. However, given the availability of various speech recognition datasets, we employ a simpler approach. We exploit a publicly available Mandarin speech corpus, AIShell (Bu et al., 2017), which contains around 140,000 sentences with utterances11. We use Kaldi (Povey et al., 2011), a speech recognition toolkit, to transcribe the utterances into recognized sentences. Finally, by comparing the recognized sentences with the original ones, we can identify whether the recognition results are correct. If not, they can serve as incorrectlyrecognized results and be used to build a corpus with P-style spelling errors
 
-与OCR工具类似，自动语音识别（ASR）工具也可能会将字符误认为发音相似的其他人（Hartley和Reich，2005年）。 建立一个带注释的语料库P型错误，我们遵循类似的启发与V型错误和OCR工具相关的内容，以及
-采用了如图3所示的管道。但是，
-考虑到各种语音识别数据集的可用性，我们采用了一种更简单的方法。 我们
-利用公开可用的普通话语料库AIShell（Bu et al。，2017），其中包括
-约有140,000个句子的发音11。 我们
-使用语音识别工具包Kaldi（Povey等人，2011）将语音转换为可识别的句子。 最后，通过比较
-识别与原始句子相同的句子，我们
-可以识别识别结果是否
-正确。 如果没有，它们可能会被误认为是正确的结果，并被用来建立语料库
-带有P样式的拼写错误
+与OCR工具类似，自动语音识别（ASR）工具也可能会将字符误认为发音相似的其他人（Hartley和Reich，2005年）。 为了建立一个带注释的语料库P型错误，我们遵循类似的启发与V型错误和OCR工具相关的内容，以及采用了如图3所示的一种管道方法。但是，考虑到各种语音识别数据集的可用性，我们采用了一种更简单的方法。 我们利用公开可用的普通话语料库AIShell（Bu et al。，2017），其中包括约有140,000个句子的发音。 我们使用语音识别工具包Kaldi（Povey等人，2011）将语音转换为可识别的句子。 最后，通过比较识别与原始句子相同的句子，我们可以判断识别结果是否正确。 如果没有，它们可能会被误认为是正确的结果，并被用来建立语料库带有P样式的拼写错误
+
+**Bad Cases and the Solution**
 
 Bad Cases and the Solution For generated Pstyle errors, we also identify some bad cases, which potentially introduce much noise. To improve the quality of the generated corpus, a solution is thus needed to remove them. Table 2 gives three types of bad cases with a good one. We describe the solution to deal with them as follows.
 
-不良情况和解决方案对于产生的Pstyle错误，我们还确定了一些不良情况，
-可能会引入很多噪音。 为了提高生成的语料库的质量，因此需要一种解决方案以将其删除。 表2给出
-三种类型的不良案例有一种。 我们描述解决这些问题的方法如下。
+不良情况和解决方案对于产生的Pstyle错误，我们也识别出了一些错误案例，可能会引入很多噪音。 为了提高生成的语料库的质量，因此需要一种解决方案以将其删除。 表2给出三种类型的不良案例有一种。 我们描述解决这些问题的方法如下。
 
 First, we discard all incorrectly recognized results similar to Case 1, which has different lengths
 comparing to the corresponding reference sentence. Second, the incorrect characters in Case 2 have totally different pronunciations with their
@@ -174,8 +151,52 @@ After the aforementioned steps, we generate a corpus with more than 7K P-style s
 total. We denote it D-asr and show its statistics in
 the D-asr column in Table 3.
 
-首先，我们丢弃所有与情况1类似的错误识别的结果，但结果的长度不同与相应的参考句子进行比较。其次，案例2中的错误字符的发音完全不同黄金句中的相应字符。这种情况不能满足我们生成P型错误的要求。为此，我们从汉语拼音中获得拼音12的发音。在线中文词典13。然后很容易识别错误识别的字符的发音与它们在金句中的对应字符。具体来说，就拼音而言，当两个字符具有拼音时，它们的发音相似相同的首字母和结尾，但音调不同，即da2和da1。第三，根据Chen等。 （2011），每篇学生论文平均可能有两个错误，这反映了一个事实，即每个句子平均不会包含两个以上的拼写错误。因此，我们删除了那些错误识别的结果包含更多情况2中显示的两个不正确字符。经过上述步骤，我们生成了一个语料库，该语料库中的P样式拼写错误超过7K
+首先，我们丢弃所有与案例1类似的错误识别的结果，其结果的长度与相应的参考句子进行比较， 长度不同。
+
+其次，案例2中的错误字符的发音完全不同于黄金句中的相应字符。这种情况不能满足我们生成P型错误的要求。为此，我们从汉语拼音中获得拼音12的发音。在线中文词典13。然后很容易识别错误识别的字符的发音与它们在金句中的对应字符。
+
+具体来说，就拼音而言，当两个字符具有拼音时，它们的发音相似相同的首字母和结尾，但音调不同，即da2和da1。第三，根据Chen等。 （2011），每篇学生论文平均可能有两个错误，这反映了一个事实，即每个句子平均不会包含两个以上的拼写错误。因此，我们删除了那些错误识别的结果包含更多情况2中显示的两个不正确字符。经过上述步骤，我们生成了一个语料库，该语料库中的P样式拼写错误超过7K
 总。我们将其表示为D-asr，并在表3中的D-asr列。
+
+# **评估**
+
+## **benchmark data**
+
+![image-20191118110658762](../yaolinxia.github.io/img/image-20191118110658762.png)
+
+考虑到训练集的质量对于模型在测试集上的表现效果有很重要的影响。因此在这篇论文中，我们提出了一种度量标准，
+$$
+Ctraiun:test
+$$
+使用这个新的评估指标，通过计算在训练集中拼音错误在测试集中的数量，来衡量正确的程度。
+
+![image-20191118113236843](../yaolinxia.github.io/img/image-20191118113236843.png)
+
+## **质量分析**
+
+**设置**，涉及的错误能否很容易的由人类产生，我们随机从中选择了300个句子，用于人为评估，其中150个来自于D-ocr, 150个来自于D-asr。选择了3个母语为汉语人士，他们是大学生，被邀请阅读和注释出句子中这些错误。然后我们从两个层次分析由这三个学生注释的结果，句子级别上，考虑到一个句子被纠正正确是指句子中的所有错误都识别出来了。在错误级别，我们计算正确注释的错误占错误总数的百分比。
+
+**结果**，表格中的平均召回率阐释了3个学生，对于D-asr的错误识别相比于A-asr的错误识别要更容易。某种意义上也说明了P-style类型的错误相比于V-style类型的错误更容易检测。此外，我们观察到三名志愿者平均识别不出36.9%左右的错误，这可能表明我们生成的句子中包含了一些极具挑战性的错误，这些错误很可能是人为造成的。
+
+**案例学习**，为了高质量地分析为什么拼音错误没有被人类检测出来，我们对于三个学生没有发现的拼音错误实施了一个案例研究。
+
+## **定量比较**
+
+### 中文拼音错误检测
+
+这一部分，通过中文拼音检测，我们评估了我们生成的语料库的质量。我们首先探索了不同比例的P-style和V-style的错误对于语料质量的影响。
+
+**设置**：将中文拼音错误检测扔进基于字符级别的序列标注问题中，其中正确字符，非正确字符标注为1或者0，使用有监督的序列标注模型BiLSTM，将其作为Baseline去进行评估不同语料库。hidden size: 150，其他超参数，通过随机在 训练集中选择10% 进行微调。我们最小化类别交叉墒损失，摒弃选择RM-Sprop作为优化器。
+
+**结果：** P-style和D-style的拼写错误的比例会影响生成的语料的质量。
+
+bilstm在D-asr的效果要好于在D-ocr上的效果。实验结果也暗示了先前的结论就是拼硬错误和发音有关系。
+
+进一步，为了更好得阐释生成语料的质量，将它与一些训练集进行比较，其中这些事人工标注的。
+
+![image-20191118204633898](../yaolinxia.github.io/img/image-20191118204633898.png)
+
+**训练集的大小对于模型训练很重要**，
 
 # **数据集**
 
