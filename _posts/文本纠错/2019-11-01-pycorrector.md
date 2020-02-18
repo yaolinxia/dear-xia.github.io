@@ -137,6 +137,10 @@ class Seq2seqAttnModel(object):
 
 ~~~
 
+## **infer.py**
+
+
+
 
 
 

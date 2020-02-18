@@ -155,6 +155,8 @@ tag: 机器学习
 
 ![](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/v2-ed29617ad6c722ecbec1b4594bd7a375_hd.jpg)
 
+![img](https://raw.githubusercontent.com/yaolinxia/img_resource/master/attention/v2-ed29617ad6c722ecbec1b4594bd7a375_hd.jpg)
+
 > ht : decoder的隐状态
 >
 > hs: 源端的隐状态
