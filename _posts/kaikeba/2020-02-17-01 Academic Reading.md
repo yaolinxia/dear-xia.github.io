@@ -15,7 +15,7 @@
 - L：listening
 - R: reading
 - W: writing
-- S: 
+- S: speaking
 
 ## 英文学习的输入和输出
 
