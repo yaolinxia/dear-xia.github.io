@@ -10,7 +10,7 @@ tag: OCR
 ssh root@192.168.68.38
 ~~~
 
-![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/2019-03-06 15-25-13屏幕截图.png)
+![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/2019-03-06  15-25-13屏幕截图.png)
 
 ![ ](https://raw.githubusercontent.com/yaolinxia/img_resource/master/multi-input attention/2019-03-06 15-24-17屏幕截图.png)
 
