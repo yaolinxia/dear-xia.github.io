@@ -221,8 +221,6 @@ Multi-Input Attention for Unsupervised OCR Correction. [ACL (1) 2018](https://db
 
   类似地，Google网页抓取中至少有25%的页面是重复的？
 
-
-
 # 论文贡献
 
 - a scalable framework needing no supervision from human annotations to train the correction model
